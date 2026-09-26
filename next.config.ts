@@ -4,6 +4,8 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     formats: ["image/avif", "image/webp"],
+    // 75 is the default; 85 is used for full-bleed hero photography so it stays crisp.
+    qualities: [75, 85],
   },
   async redirects() {
     // The former "Laura — Artform" page is gone: those projects are now regular Parlour case studies.

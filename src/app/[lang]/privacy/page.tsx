@@ -3,7 +3,7 @@ import { pageLang, pageMeta, type LangParams } from "@/i18n/page";
 import { contact } from "@/lib/site";
 
 export const generateMetadata = ({ params }: LangParams) =>
-  pageMeta(params, "/privacy", "Privacy Policy", undefined, { robots: { index: true, follow: true } });
+  pageMeta(params, "/privacy", "Privacy Policy", "What information Parlour Creative collects through this site, how it is used, and what is stored in your browser.", { robots: { index: true, follow: true } });
 
 const LAST_UPDATED = "2026-09-26";
 

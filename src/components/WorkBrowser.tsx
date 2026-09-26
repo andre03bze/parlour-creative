@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams, type ReadonlyURLSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import Link, { useT } from "@/i18n/client";
 import { ProjectVisual } from "@/components/ProjectVisual";
@@ -15,19 +15,26 @@ import { categoryLabels, projectLine, type CaseStudy, type Category, type Market
  *  - a quiet Market toggle (Belize / Canada) — the current commercial focus versus documented international experience
  * plus the Thumbnail / List toggle. Chips scroll horizontally on small screens instead of wrapping into a wall.
  */
-export function WorkBrowser({
-  projects,
-  categories,
-  markets,
-}: {
+interface Props {
   projects: CaseStudy[];
   categories: Category[];
   markets: Market[];
-}) {
+}
+
+/** Reads the URL filters. useSearchParams opts out of static rendering, hence the server-rendered default below. */
+export function WorkBrowser(props: Props) {
+  return <WorkBrowserView {...props} params={useSearchParams()} />;
+}
+
+/** Suspense fallback: the unfiltered view rendered on the server, so the grid is in the first HTML (no late pop-in / layout shift). */
+export function WorkBrowserStatic(props: Props) {
+  return <WorkBrowserView {...props} params={new URLSearchParams()} />;
+}
+
+function WorkBrowserView({ projects, categories, markets, params }: Props & { params: URLSearchParams | ReadonlyURLSearchParams }) {
   const router = useRouter();
   const pathname = usePathname();
   const t = useT();
-  const params = useSearchParams();
 
   const category = categories.find((c) => c === params.get("category")) ?? "all";
   const market = markets.find((m) => m === params.get("market")) ?? "all";
@@ -68,7 +75,7 @@ export function WorkBrowser({
             aria-label={t("Filter work by industry")}
           >
             <button type="button" className={chip(category === "all")} aria-pressed={category === "all"} onClick={() => set("category", "all")}>
-              {t("All")} <span className="ml-1 opacity-60">{inMarket.length}</span>
+              {t("All")} <span className="ml-1 opacity-75">{inMarket.length}</span>
             </button>
             {categories.map((c) => {
               const n = count(c);
@@ -81,7 +88,7 @@ export function WorkBrowser({
                   disabled={n === 0}
                   onClick={() => set("category", c)}
                 >
-                  {t(categoryLabels[c])} <span className="ml-1 opacity-60">{n}</span>
+                  {t(categoryLabels[c])} <span className="ml-1 opacity-75">{n}</span>
                 </button>
               );
             })}
@@ -102,7 +109,7 @@ export function WorkBrowser({
               </button>
               {markets.map((m) => (
                 <button key={m} type="button" aria-pressed={market === m} className={quiet(market === m)} onClick={() => set("market", m)}>
-                  {t(m)} <span className="opacity-60">{base.filter((p) => p.market === m).length}</span>
+                  {t(m)} <span className="opacity-75">{base.filter((p) => p.market === m).length}</span>
                 </button>
               ))}
             </div>
@@ -135,7 +142,7 @@ export function WorkBrowser({
             {shown.map((p, i) => (
               <li key={p.slug} className={i % 2 === 1 ? "sm:mt-24" : ""}>
                 <Link href={`/work/${p.slug}`} className="group block">
-                  <Reveal media>
+                  <Reveal media eager={i === 0}>
                     <div className="relative aspect-[4/3] overflow-hidden bg-paper-dim">
                       <ProjectVisual
                         project={p}

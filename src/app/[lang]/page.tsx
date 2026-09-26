@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "@/i18n/client";
 import { Button } from "@/components/ui";
-import { HeroVideo } from "@/components/HeroVideo";
-import { Logo } from "@/components/Logo";
-import { SplitReveal } from "@/components/SplitReveal";
+import { HeroLab } from "@/components/lab/HeroLab";
 import { Marquee } from "@/components/Marquee";
 import { Reveal } from "@/components/Reveal";
 import { WorkIndex } from "@/components/WorkIndex";
-import { getFeaturedCaseStudy, getHomeCaseStudies, getPortfolioStats, getPublishedCaseStudies } from "@/content/case-studies";
+import { getHomeCaseStudies, getPortfolioStats, getPublishedCaseStudies } from "@/content/case-studies";
 import { localizeCase, localizeCases } from "@/content/localize";
 import { pageLang, pageMeta, msg, type LangParams } from "@/i18n/page";
 import { accent, rich } from "@/i18n/rich";
@@ -54,63 +51,16 @@ export default async function HomePage({ params }: LangParams) {
       projects: all.filter((c) => stagesFor(c).includes(name)).map((c) => ({ slug: c.slug, client: c.client })),
     };
   });
-  const featuredEn = getFeaturedCaseStudy();
-  const featured = featuredEn && localizeCase(featuredEn, lang);
 
   return (
     <>
-      {/* 1 — Identity: full-bleed film with the giant wordmark (small header logo stays hidden until scroll) */}
-      <section data-hero aria-label="Parlour Creative" className="relative h-[100svh] min-h-[34rem] w-full overflow-hidden bg-coal text-white">
-        <Image
-          src="/hero/hero-poster.webp"
-          alt=""
-          fill
-          priority
-          fetchPriority="high"
-          sizes="100vw"
-          className="object-cover"
-        />
-        <HeroVideo
-          src="/hero/hero.mp4"
-          poster="/hero/hero-poster.webp"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/25" />
-        <div className="container-page absolute inset-x-0 bottom-0 pb-3 lg:pb-5">
-          <div className="mb-4 flex items-end justify-between gap-6 text-[0.6875rem] font-medium uppercase tracking-[0.14em] lg:mb-6">
-            <span className="text-white/85">{t("Place-led marketing & creative studio")}</span>
-            {featured && (
-              <Link href={`/work/${featured.slug}`} className="group flex items-center gap-3 text-right">
-                <span>
-                  <span className="hidden sm:inline">{t("Now showing")}: </span>
-                  {featured.client}
-                </span>
-                <span aria-hidden="true" className="inline-block transition-transform duration-500 ease-link group-hover:translate-x-1.5">→</span>
-              </Link>
-            )}
-          </div>
-          <span className="logo-rise">
-            <Logo className="block h-auto w-full" title="Parlour Creative" />
-          </span>
-        </div>
-      </section>
+      {/* 1 — Identity: the approved still-image, scroll-driven editorial hero (its headline is the page's H1) */}
+      <HeroLab />
 
       {/* 1b — Identity statement (the page's H1) */}
       <section aria-label={t("About Parlour")} className="pb-16 pt-14 lg:pb-28 lg:pt-24">
         <div className="container-page">
-          <h1 className="text-h2 max-w-5xl">
-            <SplitReveal
-              parts={[
-                t("We turn"),
-                { text: t("places"), mark: true },
-                t("into"),
-                { text: t("brands"), mark: true },
-                t("people want to"),
-                { text: t("belong to."), accent: true },
-              ]}
-            />
-          </h1>
-          <div className="mt-10 grid gap-8 lg:mt-16 lg:grid-cols-[1fr_1fr]">
+          <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
             <span aria-hidden="true" />
             <Reveal delayMs={500}>
               <p className="prose-column text-lead">

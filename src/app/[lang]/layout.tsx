@@ -10,7 +10,7 @@ import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { LangProvider } from "@/i18n/client";
 import { LanguageSuggestion } from "@/components/LanguageSuggestion";
 import { isLang, langs, type Lang } from "@/i18n/config";
-import { ogLocale } from "@/i18n/meta";
+import { ogImage, ogLocale } from "@/i18n/meta";
 import { esClient } from "@/i18n/es";
 import { getT } from "@/i18n/t";
 import { contact, siteUrl } from "@/lib/site";
@@ -51,9 +51,11 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       type: "website",
       siteName: "Parlour Creative",
       locale: ogLocale(lang),
+      images: [{ ...ogImage, alt: t(ogImage.alt) }],
     },
     twitter: {
       card: "summary_large_image",
+      images: [ogImage.url],
     },
     icons: {
       icon: "/favicon.svg",

@@ -41,8 +41,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       description: project.tagline,
       url: localePath(lang, `/work/${project.slug}`),
       locale: ogLocale(lang),
+      type: "website",
+      siteName: "Parlour Creative",
       images: project.cover ? [{ url: project.cover.src, alt: project.cover.alt }] : undefined,
     },
+    twitter: { card: "summary_large_image", title: `${title} · Parlour Creative`, description: project.tagline, images: project.cover ? [project.cover.src] : undefined },
   };
 }
 

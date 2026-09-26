@@ -14,17 +14,20 @@ export function Reveal({
   className = "",
   delayMs = 0,
   media = false,
+  eager = false,
 }: {
   children: ReactNode;
   className?: string;
   delayMs?: number;
   media?: boolean;
+  /** Already visible in the server HTML (no curtain): for the above-the-fold LCP image. */
+  eager?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const node = ref.current;
-    if (!node) return;
+    if (!node || eager) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -42,10 +45,10 @@ export function Reveal({
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, [delayMs, media]);
+  }, [delayMs, media, eager]);
 
   return (
-    <div ref={ref} className={`${media ? "reveal-wrap" : "reveal"} ${className}`}>
+    <div ref={ref} className={`${media ? "reveal-wrap" : "reveal"} ${eager ? "is-visible" : ""} ${className}`}>
       {media ? <div className="reveal-media">{children}</div> : children}
     </div>
   );

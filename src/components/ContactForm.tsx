@@ -101,6 +101,10 @@ export function ContactForm() {
           {t("Please check the highlighted fields.")}
         </p>
       )}
+      <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="website">Website</label>
+        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="grid gap-8 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className={labelClass}>{t("Name *")}</label>

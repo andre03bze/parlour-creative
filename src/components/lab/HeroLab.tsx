@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import { useT } from "@/i18n/client";
+import { rich } from "@/i18n/rich";
 import styles from "./HeroLab.module.css";
 
 const s = styles as Record<string, string>;
@@ -20,6 +22,8 @@ html[data-hero-lab] header:not(:has([aria-expanded="true"])) button { color: col
 export function HeroLab() {
   const section = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
+  const probe = useRef<HTMLSpanElement>(null);
+  const t = useT();
 
   useEffect(() => {
     const sec = section.current, st = stage.current;
@@ -32,11 +36,12 @@ export function HeroLab() {
     // actually arrives beneath it (menu at the right edge first on desktop, logo once the top strip clears).
     const header = () => {
       const vw = window.innerWidth, vh = window.innerHeight, mobile = vw < 768;
-      const topPct = mobile ? 0.24 : 0.152, rightPct = mobile ? 0.08 : 0.54;
+      const rightPct = mobile ? 0.08 : 0.54;
+      const pt = probe.current?.offsetHeight || (mobile ? 0.24 : 0.152) * vh;
       // The paper edge sweeps the logo (y 22–58px) as the photo window retreats; the menu clears sooner on
       // desktop because the window's right edge also pulls in. Same eased e1 as the clip-path.
       const e1 = smooth(clamp01((cur - 0.1) / 0.45));
-      const yA = 22 / (topPct * vh), yB = 58 / (topPct * vh);
+      const yA = 22 / pt, yB = 58 / pt;
       const xA = (1 - (vw - 30) / vw) / rightPct, xB = (1 - (vw - 170) / vw) / rightPct;
       const band = (a: number, b: number) => clamp01((e1 - a) / Math.max(0.001, b - a));
       root.style.setProperty("--hdr-logo", band(yA, yB).toFixed(3));
@@ -72,18 +77,18 @@ export function HeroLab() {
 
   const line = (
     <>
-      We turn <em>places</em>
+      {rich(t, "We turn <a>places</a>", { a: (c) => <em>{c}</em> })}
       <br />
-      into brands people
+      {t("into brands people")}
       <br />
-      want to belong to.
+      {t("want to belong to.")}
     </>
   );
 
   const item = (cls: string | undefined, src: string, alt: string, cap: string, sizes: string) => (
     <figure className={`${s.item} ${cls}`}>
       <div className={s.frame}>
-        <Image src={src} alt={alt} fill sizes={sizes} />
+        <Image src={src} alt={t(alt)} fill sizes={sizes} />
       </div>
       <figcaption className={s.cap}>{cap}</figcaption>
     </figure>
@@ -94,12 +99,13 @@ export function HeroLab() {
     <style>{HEADER_CSS}</style>
     <section ref={section} aria-label="Parlour Creative" className={s.section}>
       <div ref={stage} className={s.stage}>
+        <span ref={probe} className={s.probe} aria-hidden="true" />
         <h1 className={s.hl}>{line}</h1>
 
         <div className={s.photo}>
           <div className={s.settle}>
             <div className={s.photoImg}>
-              <Image src={W("blue-ocean-belize", "aerial-009-2880w.webp")} alt="Aerial view of the San Pedro coastline, Belize, with the reef and open sea beyond" fill priority unoptimized sizes="100vw" className="object-cover" />
+              <Image src={W("blue-ocean-belize", "aerial-009-2880w.webp")} alt={t("Aerial view of the San Pedro coastline, Belize, with the reef and open sea beyond")} fill priority fetchPriority="high" quality={85} sizes="100vw" className="object-cover" />
             </div>
           </div>
           <div className={s.shade} aria-hidden="true" />
@@ -120,7 +126,7 @@ export function HeroLab() {
             ] as [string, string, string][]
           ).map(([w, src, f]) => (
             <li key={w}>
-              <span className={s.word} style={{ ...fill(src), ["--f" as string]: `var(${f})` }}>{w}</span>
+              <span className={s.word} style={{ ...fill(src), ["--f" as string]: `var(${f})` }}>{t(w)}</span>
             </li>
           ))}
         </ul>

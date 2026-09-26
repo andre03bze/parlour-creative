@@ -24,7 +24,12 @@ function clean(value: unknown, max = MAX_LEN): string {
   return value.trim().slice(0, max);
 }
 
+const MAX_BODY_BYTES = 20_000;
+
 export async function POST(request: Request) {
+  if (Number(request.headers.get("content-length") ?? 0) > MAX_BODY_BYTES) {
+    return NextResponse.json({ error: "Request too large" }, { status: 413 });
+  }
   let body: unknown;
   try {
     body = await request.json();
@@ -37,6 +42,10 @@ export async function POST(request: Request) {
   }
 
   const raw = body as Record<string, unknown>;
+  // Honeypot: real visitors never see or fill this field; bots that fill every input are rejected.
+  if (typeof raw.website === "string" && raw.website.trim() !== "") {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   const payload: ContactPayload = {
     name: clean(raw.name, 200),
     company: clean(raw.company, 200),

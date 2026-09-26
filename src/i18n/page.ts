@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { Lang } from "./config";
-import { alternatesFor, ogLocale } from "./meta";
+import { alternatesFor, ogImage, ogLocale } from "./meta";
+import { localePath } from "./config";
 import { getT, type T } from "./t";
 
 export type LangParams = { params: Promise<{ lang: string }> };
@@ -20,12 +21,25 @@ export async function pageMeta(
   extra: Metadata = {}
 ): Promise<Metadata> {
   const { lang, t } = await pageLang(params);
+  const shownTitle = extra.title ? undefined : t(title);
+  const shownDescription = description ? t(description) : undefined;
+  const image = { ...ogImage, alt: t(ogImage.alt) };
   return {
     title: t(title),
-    ...(description ? { description: t(description) } : {}),
+    ...(description ? { description: shownDescription } : {}),
     alternates: alternatesFor(lang, path),
     ...extra,
-    openGraph: { locale: ogLocale(lang), ...(extra.openGraph ?? {}) },
+    openGraph: {
+      type: "website",
+      siteName: "Parlour Creative",
+      locale: ogLocale(lang),
+      title: shownTitle ?? t(title),
+      ...(shownDescription ? { description: shownDescription } : {}),
+      url: localePath(lang, path),
+      images: [image],
+      ...(extra.openGraph ?? {}),
+    },
+    twitter: { card: "summary_large_image", title: shownTitle ?? t(title), ...(shownDescription ? { description: shownDescription } : {}), images: [image.url] },
   };
 }
 

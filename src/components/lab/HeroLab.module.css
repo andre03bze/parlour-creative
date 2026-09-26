@@ -2,8 +2,14 @@
 .section { position: relative; height: 320svh; background: var(--color-paper); color: var(--color-ink); }
 .stage {
   --p: 0;
-  --hh: 23.2vw;
-  --top: 9svh;
+  /* Type scale follows width but yields to short viewports; --hh is the three-line headline block, --pt the photo window's settled top edge. */
+  --fs: min(8.4vw, 21svh);
+  --hh: calc(var(--fs) * 2.76);
+  --top: max(9svh, 4.75rem);
+  --pt: calc(var(--top) + var(--fs) * 0.46);
+  /* Left/right edge of the composition: 5vw, but never inside the 120rem header container on ultra-wide screens. */
+  --gut: max(5vw, calc((100vw - 120rem) / 2 + 2.5rem));
+  --gutr: max(3vw, calc((100vw - 120rem) / 2 + 2.5rem));
   position: sticky; top: 0; height: 100svh; overflow: clip;
   --r1: clamp(0, calc((var(--p) - 0.10) / 0.45), 1);
   --r2: clamp(0, calc((var(--p) - 0.20) / 0.26), 1);
@@ -26,7 +32,7 @@
 /* The opening photograph: full-bleed, then a window that hands the page back to the paper. */
 .photo {
   position: absolute; inset: 0; z-index: 2; overflow: hidden;
-  clip-path: inset(calc(var(--e1) * 15.2%) calc(var(--e1) * 54%) calc(var(--e1) * 22%) calc(var(--e1) * 5%));
+  clip-path: inset(calc(var(--e1) * var(--pt)) calc(var(--e1) * 54%) calc(var(--e1) * 22%) calc(var(--e1) * var(--gut)));
   background: var(--color-coal);
 }
 .settle { position: absolute; inset: 0; animation: settle 9s var(--ease-editorial) both; }
@@ -36,8 +42,8 @@
 
 /* The statement is set twice at the same place: light inside the photo window, ink on the paper beneath it. */
 .hl {
-  position: absolute; left: 5vw; top: var(--top); margin: 0; z-index: 1;
-  font-size: 8.4vw; line-height: 0.92; font-weight: 500; letter-spacing: -0.045em;
+  position: absolute; left: var(--gut); top: var(--top); margin: 0; z-index: 1;
+  font-size: var(--fs); line-height: 0.92; font-weight: 500; letter-spacing: -0.045em;
   transform-origin: 0 0;
   transform: translateY(calc((1 - var(--e1)) * (91svh - var(--top) - var(--hh)))) scale(calc(1 - var(--e1) * 0.5));
   white-space: nowrap; color: var(--color-ink);
@@ -59,19 +65,24 @@
 .e .frame { clip-path: inset(0 0 0 calc((1 - var(--e)) * 100%)); }
 
 /* Giant words are windows onto photographs. */
-.words { position: absolute; right: 3vw; bottom: 5svh; z-index: 3; margin: 0; padding: 0; list-style: none; text-align: right; }
+.probe { position: absolute; left: 0; top: 0; width: 0; height: var(--pt); visibility: hidden; pointer-events: none; }
+.words { position: absolute; right: var(--gutr); bottom: 5svh; z-index: 3; margin: 0; padding: 0; list-style: none; text-align: right; }
 .words li { overflow: hidden; line-height: 0.9; padding-bottom: 0.04em; }
 .word {
-  display: block; font-size: 8.6vw; font-weight: 600; letter-spacing: -0.05em; text-transform: uppercase;
+  display: block; font-size: min(8.6vw, 17svh); font-weight: 600; letter-spacing: -0.05em; text-transform: uppercase;
   color: transparent; -webkit-background-clip: text; background-clip: text; background-size: cover; background-position: center;
   transform: translateY(calc((1 - var(--f)) * 105%));
 }
 
+/* Spanish runs longer: same composition, smaller display size (words: LUGARES / MARCAS / PERSONAS). */
+:global(html[lang="es"]) .stage { --fs: min(6.2vw, 21svh); }
+:global(html[lang="es"]) .word { font-size: min(6.6vw, 17svh); }
+
 @media (max-width: 767px) {
   .section { height: 280svh; }
-  .stage { --hh: 26.5vw; --top: 13svh; }
-  .photo { clip-path: inset(calc(var(--e1) * 24%) calc(var(--e1) * 8%) calc(var(--e1) * 36%) calc(var(--e1) * 8%)); }
-  .hl { left: 6vw; font-size: 9.6vw; }
+  .stage { --fs: 9.6vw; --top: 13svh; --pt: 24svh; --gut: 6vw; }
+  :global(html[lang="es"]) .stage { --fs: 6.6vw; }
+  .photo { clip-path: inset(calc(var(--e1) * var(--pt)) calc(var(--e1) * 8%) calc(var(--e1) * 36%) calc(var(--e1) * 8%)); }
   .b { left: 40vw; top: 68svh; width: 54vw; --h: 20svh; }
   .d { left: 6vw; top: 64svh; width: 30vw; --h: 28svh; }
   .c, .e { display: none; }

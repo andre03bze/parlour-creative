@@ -83,7 +83,7 @@ export default async function AboutPage({ params }: LangParams) {
           <div className="mt-12 grid gap-16 lg:grid-cols-2">
             <div>
               <div className="aspect-[3/4] bg-paper-dim" />
-              <h2 className="text-h3 mt-6">Laura Curridor</h2>
+              <h3 className="text-h3 mt-6">Laura Curridor</h3>
               <p className="text-meta mt-1">{t("Founder, CEO & Chief Strategy Officer")}</p>
               <p className="prose-column mt-4 text-ink-soft">
                 {t("Laura is a brand and marketing strategist whose background spans creative advertising and design-build. She spent eight years in Toronto leading client strategy, integrated campaigns and business development, rising to Director of Marketing. That body of work includes broadcast design for CBC News, Sportsnet and TVO, and brand and sales environments for Forgestone Capital and The HUB at 30 Bay. She has since held embedded senior marketing roles across Belize, including with Blue Ocean Belize, Offi Belize and STELCOR Solutions.")}
@@ -97,7 +97,7 @@ export default async function AboutPage({ params }: LangParams) {
 
             <div>
               <div className="aspect-[3/4] bg-paper-dim" />
-              <h2 className="text-h3 mt-6">Andre Acosta</h2>
+              <h3 className="text-h3 mt-6">Andre Acosta</h3>
               <p className="text-meta mt-1">{t("Creative & Strategy Director")}</p>
               <p className="prose-column mt-4 text-ink-soft">
                 {t("Andre turns strategy into the work people see: the films, photography, campaigns and content that carry a project’s story. He leads Parlour’s creative direction and production and shapes strategy alongside Laura, so the idea and the execution never drift apart. Andre is the founder of Tide and Co, his creative and production company, and led production for Blue Ocean Belize’s portfolio, including 120+ production hours and 14 videos in a single period.")}

@@ -13,6 +13,9 @@ export function localePath(lang: Lang, href: string): string {
 
 /** Remove a leading /es from a pathname. */
 export function stripLang(pathname: string): string {
+  // Server render sees the internal /en/... path (proxy rewrite); strip it as well as /es.
+  if (pathname === "/en") return "/";
+  if (pathname.startsWith("/en/")) return pathname.slice(3);
   if (pathname === "/es") return "/";
   return pathname.startsWith("/es/") ? pathname.slice(3) : pathname;
 }

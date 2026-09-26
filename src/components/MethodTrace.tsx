@@ -13,11 +13,11 @@ export function MethodTrace({ project, t, className = "" }: { project: CaseStudy
       {stages.map((s, i) => (
         <span key={s}>
           {i > 0 && (
-            <span aria-hidden="true" className="text-ink/25">
+            <span aria-hidden="true" className="text-ink/50">
               {" / "}
             </span>
           )}
-          <span className={hit.has(s) ? "text-ink" : "text-ink/25"}>{t(s)}</span>
+          <span className={hit.has(s) ? "text-ink" : "text-ink/50"}>{t(s)}</span>
         </span>
       ))}
     </p>

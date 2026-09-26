@@ -87,6 +87,12 @@
     outline-offset: 3px;
   }
 
+  /* On dark surfaces (menu panel, dark bands, footer) the oxide ring drops below 3:1; use paper there. */
+  [data-dark] :focus-visible,
+  #site-menu :focus-visible {
+    outline-color: var(--color-paper);
+  }
+
   ::selection {
     background: var(--color-ink);
     color: var(--color-paper);

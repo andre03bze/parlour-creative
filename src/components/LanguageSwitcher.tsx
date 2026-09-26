@@ -33,7 +33,7 @@ export function LanguageSwitcher() {
             aria-current={lang === l ? "true" : undefined}
             aria-label={l === "en" ? "English" : "Español"}
             onClick={go(l)}
-            className={`px-0.5 py-2 transition-opacity duration-300 ${lang === l ? "opacity-100" : "opacity-55 hover:opacity-100"}`}
+            className={`px-0.5 py-2 transition-opacity duration-300 ${lang === l ? "opacity-100 underline underline-offset-[6px]" : "opacity-75 hover:opacity-100"}`}
           >
             {l}
           </a>

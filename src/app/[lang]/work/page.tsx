@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { PageIntro } from "@/components/ui";
-import { WorkBrowser } from "@/components/WorkBrowser";
+import { WorkBrowser, WorkBrowserStatic } from "@/components/WorkBrowser";
 import { ParlourIndex } from "@/components/ParlourIndex";
 import { getActiveCategories, getActiveMarkets, getPortfolioStats, getPublishedCaseStudies } from "@/content/case-studies";
 import { localizeCases } from "@/content/localize";
@@ -14,8 +14,7 @@ export const generateMetadata = ({ params }: LangParams) =>
     params,
     "/work",
     "Work",
-    "Selected work from Parlour Creative across real estate, broadcast and media, food and beverage, fashion and retail, from Toronto studios to Belize coastlines.",
-    { openGraph: { title: "Work · Parlour Creative", url: "/work" } }
+    "Selected work from Parlour Creative across real estate, broadcast and media, food and beverage, fashion and retail, from Toronto studios to Belize coastlines."
   );
 
 export default async function WorkPage({ params }: LangParams) {
@@ -49,7 +48,7 @@ export default async function WorkPage({ params }: LangParams) {
         </p>
       </PageIntro>
       <div className="container-page pb-28 lg:pb-40">
-        <Suspense fallback={null}>
+        <Suspense fallback={<WorkBrowserStatic projects={projects} categories={categories} markets={markets} />}>
           <WorkBrowser projects={projects} categories={categories} markets={markets} />
         </Suspense>
       </div>
