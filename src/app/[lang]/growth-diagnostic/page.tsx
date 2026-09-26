@@ -36,7 +36,10 @@ export default async function GrowthDiagnosticPage({ params }: LangParams) {
               {t("A three-week audit of brand, website, ads, content, lead handling and sales hand-off, benchmarked against your competitors and your own buyer or guest profile, delivered as a 90-day growth plan, presented live.")}
             </p>
             <div>
-              <Button href="/contact" variant="onDark">{t("Start a Growth Diagnostic")}</Button>
+              <div className="flex flex-wrap gap-4">
+                <Button href="/contact" variant="onDark">{t("Start a Growth Diagnostic")}</Button>
+                <Button href="/diagnostic" variant="onDark">{t("Try the interactive diagnostic")}</Button>
+              </div>
             </div>
           </div>
         </div>

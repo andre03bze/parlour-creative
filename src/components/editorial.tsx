@@ -35,7 +35,7 @@ export function PageHead({
             fill
             priority
             sizes="100vw"
-            className="object-cover"
+            className="crop-scroll object-cover"
             style={{ objectPosition: image.position ?? "center" }}
           />
           <div aria-hidden="true" className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/35 to-transparent" />

@@ -93,7 +93,7 @@ export default async function HomePage({ params }: LangParams) {
       </div>
 
       {/* 4 — Proof + capability */}
-      <section data-dark aria-labelledby="proof-heading" className="bg-coal pb-24 pt-20 text-paper lg:pb-40 lg:pt-32">
+      <section data-dark aria-labelledby="proof-heading" className="band-rise bg-coal pb-24 pt-20 text-paper lg:pb-40 lg:pt-32">
         <div className="container-page">
           <Reveal>
             <h2 id="proof-heading" className="text-statement max-w-4xl">
@@ -108,7 +108,7 @@ export default async function HomePage({ params }: LangParams) {
                 {
                   p: (c) => <Link href="/work" className={proofLink}>{c}</Link>,
                   i: (c) => <Link href="/work" className={proofLink}>{c}</Link>,
-                  n: accent,
+                  n: (c) => <span className="rise"><span className="accent">{c}</span></span>,
                 },
                 { total: stats.total, industries: stats.industries }
               )}
@@ -159,11 +159,11 @@ export default async function HomePage({ params }: LangParams) {
       </section>
 
       {/* 7 — Growth Diagnostic */}
-      <section aria-labelledby="gd-heading" className="bg-tint py-24 lg:py-40">
+      <section aria-labelledby="gd-heading" className="overflow-x-clip bg-tint py-24 lg:py-40">
         <div className="container-page grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end">
           <div>
             <p className="text-meta">{t("Parlour Growth Diagnostic")}</p>
-            <h2 id="gd-heading" className="text-display mt-4">
+            <h2 id="gd-heading" className="slide-x text-display mt-4">
               {rich(t, "Find the <a>leak.</a>", { a: accent })}
             </h2>
           </div>

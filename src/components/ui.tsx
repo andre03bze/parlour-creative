@@ -15,7 +15,7 @@ export function Button({
   children: ReactNode;
 }) {
   const base =
-    "group inline-flex items-center gap-3 border px-6 py-3.5 text-xs font-medium uppercase tracking-[0.14em] transition-colors duration-500 ease-editorial";
+    "group inline-flex items-center gap-3 border px-6 py-3.5 text-xs font-medium uppercase tracking-[0.14em] transition-[color,background-color,border-color,transform] duration-500 ease-editorial active:translate-y-px";
   const styles = {
     primary: "border-cta bg-cta text-cta-ink hover:bg-cta-hover hover:border-cta-hover",
     secondary: "border-ink text-ink hover:bg-ink hover:text-paper",

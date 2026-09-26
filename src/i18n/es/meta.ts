@@ -19,4 +19,6 @@ export const esMeta: Record<string, string> = {
   "What information Parlour Creative collects through this site, how it is used, and what is stored in your browser.": "Qué información recopila Parlour Creative a través de este sitio, cómo se usa y qué se guarda en tu navegador.",
   "The terms that govern engagements with Parlour Creative: billing, third-party costs, revisions and guarantees.": "Los términos que rigen las contrataciones con Parlour Creative: facturación, costos de terceros, revisiones y garantías.",
   "Aerial view of the San Pedro coastline, Belize": "Vista aérea de la costa de San Pedro, Belice",
+  "Growth System Diagnostic": "Diagnóstico del sistema de crecimiento",
+  "Seven questions, one for each stage of the Parlour Method, point to where a place's growth system may be under most strain.": "Siete preguntas, una por cada etapa del Método Parlour, señalan dónde el sistema de crecimiento de un lugar puede estar bajo más presión.",
 };

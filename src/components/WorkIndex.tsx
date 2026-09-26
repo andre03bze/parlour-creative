@@ -61,13 +61,19 @@ export function WorkIndex({ projects }: { projects: CaseStudy[] }) {
         style={{ opacity: active ? 1 : 0, transition: "opacity 300ms ease", willChange: "transform, opacity" }}
       >
         {projects.map((p) => (
-          <div key={p.slug} className={`absolute left-0 top-0 w-full transition-opacity duration-300 ${active === p.slug ? "opacity-100" : "opacity-0"}`}>
+          <div key={p.slug} className={`absolute left-0 top-0 w-full transition-[opacity,transform] duration-500 ease-editorial motion-reduce:transition-none ${active === p.slug ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
             <div className="relative aspect-[16/10] overflow-hidden bg-coal">
-              <ProjectVisual project={p} sizes="32vw" />
+              <span className={`absolute inset-0 block transition-transform duration-[1200ms] ease-editorial motion-reduce:transition-none ${active === p.slug ? "scale-100" : "scale-[1.08]"}`}><ProjectVisual project={p} sizes="32vw" /></span>
             </div>
             <ul className="absolute left-full top-1/2 ml-4 hidden w-44 -translate-y-1/2 text-[0.625rem] font-medium uppercase leading-relaxed tracking-[0.12em] xl:block">
-              {p.disciplines.slice(0, 6).map((d) => (
-                <li key={d}>/ {d}</li>
+              {p.disciplines.slice(0, 6).map((d, di) => (
+                <li
+                  key={d}
+                  className={`transition-[opacity,transform] duration-500 ease-editorial motion-reduce:transition-none ${active === p.slug ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-0"}`}
+                  style={{ transitionDelay: active === p.slug ? `${120 + di * 45}ms` : "0ms" }}
+                >
+                  / {d}
+                </li>
               ))}
             </ul>
           </div>
@@ -85,7 +91,7 @@ export function WorkIndex({ projects }: { projects: CaseStudy[] }) {
               className={`block py-4 transition-[opacity,color] duration-500 ease-link hover:text-accent-text lg:py-5 ${active && active !== p.slug ? "lg:opacity-20" : "opacity-100"}`}
             >
               <span className="flex items-end justify-between gap-6">
-                <span className="text-index">{p.client}</span>
+                <span className={`text-index transition-transform duration-500 ease-editorial motion-reduce:transition-none ${active === p.slug ? "lg:translate-x-3" : ""}`}>{p.client}</span>
                 <span className="hidden shrink-0 pb-3 text-right text-[0.6875rem] font-medium uppercase leading-snug tracking-[0.12em] sm:block sm:max-w-[16rem]">
                   {p.sector}
                   <span className="mt-1 block text-ink-soft">{p.place ?? p.since ?? ""}</span>

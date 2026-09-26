@@ -20,6 +20,13 @@ export interface LensStage {
 export function MethodLens({ stages, total }: { stages: LensStage[]; total: number }) {
   const t = useT();
   const [active, setActive] = useState(stages[0]!.name);
+  const [prev, setPrev] = useState<string | null>(null);
+  const select = (name: string) => {
+    if (name === active) return;
+    setPrev(active);
+    setActive(name);
+  };
+  const index = stages.findIndex((x) => x.name === active);
   const current = stages.find((s) => s.name === active)!;
   const shown = current.projects.slice(0, 7);
 
@@ -34,9 +41,9 @@ export function MethodLens({ stages, total }: { stages: LensStage[]; total: numb
                 <button
                   type="button"
                   aria-pressed={on}
-                  onMouseEnter={() => setActive(s.name)}
-                  onFocus={() => setActive(s.name)}
-                  onClick={() => setActive(s.name)}
+                  onMouseEnter={() => select(s.name)}
+                  onFocus={() => select(s.name)}
+                  onClick={() => select(s.name)}
                   className="flex w-full items-baseline gap-4 py-3 text-left transition-opacity duration-500 ease-link lg:py-4"
                   style={{ opacity: on ? 1 : 0.5 }}
                 >
@@ -78,11 +85,29 @@ export function MethodLens({ stages, total }: { stages: LensStage[]; total: numb
                   alt={s.name === active ? s.showcase.alt : ""}
                   fill
                   sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="object-cover transition-[opacity,transform] duration-[900ms] ease-link"
-                  style={{ opacity: s.name === active ? 1 : 0, transform: s.name === active ? "scale(1)" : "scale(1.05)" }}
+                  className="object-cover transition-[clip-path,transform] duration-[1000ms] ease-editorial motion-reduce:transition-none"
+                  style={{
+                    // The incoming image wipes up over the outgoing one, which settles behind it.
+                    clipPath: s.name === active || s.name === prev ? "inset(0)" : "inset(100% 0 0 0)",
+                    zIndex: s.name === active ? 2 : s.name === prev ? 1 : 0,
+                    transform: s.name === active ? "scale(1)" : "scale(1.08)",
+                  }}
                 />
               )
           )}
+          <span aria-hidden="true" className="pointer-events-none absolute bottom-3 left-4 z-10 block h-[clamp(3rem,2rem+5vw,6rem)] overflow-hidden text-[clamp(3rem,2rem+5vw,6rem)] font-medium leading-none tracking-[-0.05em] text-paper">
+            <span
+              className="block transition-transform duration-[800ms] ease-editorial motion-reduce:transition-none"
+              style={{ transform: `translateY(-${index * 100}%)` }}
+            >
+              {stages.map((x, i) => (
+                <span key={x.name} className="block h-[clamp(3rem,2rem+5vw,6rem)]">{String(i + 1).padStart(2, "0")}</span>
+              ))}
+            </span>
+          </span>
+          <span aria-hidden="true" className="absolute inset-x-0 bottom-0 z-10 h-0.5 bg-paper/25">
+            <span className="block h-full origin-left bg-paper transition-transform duration-[800ms] ease-editorial motion-reduce:transition-none" style={{ transform: `scaleX(${(index + 1) / stages.length})` }} />
+          </span>
         </div>
         {current.showcase && (
           <figcaption className="mt-3 flex items-baseline justify-between gap-4 text-[0.6875rem] font-medium uppercase tracking-[0.12em]">

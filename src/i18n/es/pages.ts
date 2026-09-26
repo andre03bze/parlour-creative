@@ -267,4 +267,10 @@ export const esPages: Record<string, string> = {
   "The site stores your language choice and, if you use the palette preview, your palette choice in your browser’s local storage, so the site remembers them. This data stays on your device and is not sent to us. We do not set cookies.": "El sitio guarda tu elección de idioma y, si usas la vista previa de paletas, tu elección de paleta en el almacenamiento local de tu navegador, para recordarlas. Estos datos permanecen en tu dispositivo y no se nos envían. No usamos cookies.",
   "Third-party content": "Contenido de terceros",
   "Some case studies include films hosted on YouTube or Vimeo. Nothing from those services loads until you press play; once you do, they may collect data under their own policies.": "Algunos casos de estudio incluyen películas alojadas en YouTube o Vimeo. Nada de esos servicios se carga hasta que presionas reproducir; a partir de ese momento pueden recopilar datos conforme a sus propias políticas.",
+  "Growth System Diagnostic": "Diagnóstico del sistema de crecimiento",
+  "How it reads your answers": "Cómo lee tus respuestas",
+  "The diagnostic follows the Parlour Method, from the place to the sale: Site, Strategy, Brand, Story, Experience, Distribution, Sales. Each question looks at one stage. The stages with the most friction in your answers are named, with where we'd start.": "El diagnóstico sigue el Método Parlour, del lugar a la venta: Lugar, Estrategia, Marca, Historia, Experiencia, Distribución, Ventas. Cada pregunta examina una etapa. Se nombran las etapas con más fricción en tus respuestas, junto con por dónde empezaríamos.",
+  "The diagnostic is directional. A Growth Diagnostic tests it against your market.": "El diagnóstico es orientativo. Un Growth Diagnostic lo pone a prueba frente a tu mercado.",
+  "About the Growth Diagnostic": "Conoce el Growth Diagnostic",
+  "Try the interactive diagnostic": "Prueba el diagnóstico interactivo",
 };

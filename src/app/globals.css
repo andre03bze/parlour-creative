@@ -453,3 +453,28 @@ html {
     animation: none !important;
   }
 }
+
+
+/* ── Editorial motion (restrained; all of it collapses under prefers-reduced-motion) ─────────────────────────── */
+
+/* Numbers "printed" into place when their Reveal wrapper enters the viewport. */
+.rise { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.rise > span { display: inline-block; transform: translateY(105%); transition: transform 1100ms var(--ease-editorial) 250ms; }
+.is-visible .rise > span { transform: none; }
+.no-js .rise > span { transform: none; }
+
+/* Scroll-linked, CSS-only (no JS, no listeners). Browsers without animation-timeline simply show the resting state. */
+@keyframes band-rise { from { clip-path: inset(min(9vw, 7rem) 0 0 0); } to { clip-path: inset(0); } }
+@keyframes slide-x { from { transform: translateX(6vw); } to { transform: none; } }
+@keyframes crop-scroll { from { transform: scale(1); } to { transform: scale(1.12); } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .band-rise { animation: band-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+    .slide-x { animation: slide-x linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
+    .crop-scroll { animation: crop-scroll linear both; animation-timeline: scroll(root); animation-range: 0 90svh; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise > span { transform: none; transition: none; }
+  .band-rise, .slide-x, .crop-scroll { animation: none; }
+}

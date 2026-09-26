@@ -111,11 +111,11 @@ export default async function CaseStudyPage({ params }: Params) {
           <div className="absolute inset-0">
           {project.heroVideo ? (
             <>
-              <Image src={project.heroVideo.poster} alt="" fill priority fetchPriority="high" sizes="100vw" className="object-cover" />
+              <Image src={project.heroVideo.poster} alt="" fill priority fetchPriority="high" sizes="100vw" className="crop-scroll object-cover" />
               <HeroVideo src={project.heroVideo.src} poster={project.heroVideo.poster} className="absolute inset-0 h-full w-full object-cover" />
             </>
           ) : project.cover ? (
-            <Image src={project.cover.src} alt={project.cover.alt} fill priority sizes="100vw" className="object-cover" />
+            <Image src={project.cover.src} alt={project.cover.alt} fill priority sizes="100vw" className="crop-scroll object-cover" />
           ) : (
             <div className="flex h-full items-end p-6 text-paper lg:p-10">
               <p className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-paper/70">{t("Hero media slot · pending")}</p>
