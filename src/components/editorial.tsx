@@ -114,7 +114,7 @@ export function ProofGrid({ projects }: { projects: CaseStudy[] }) {
     <ul className="grid gap-x-6 gap-y-12 sm:grid-cols-2">
       {projects.map((p) => (
         <li key={p.slug}>
-          <Link href={`/work/${p.slug}`} className="group block">
+          <Link href={`/work/${p.slug}`} data-cursor="view" className="group block">
             <Reveal media>
               <div className="relative aspect-[4/3] overflow-hidden bg-paper-dim">
                 <ProjectVisual

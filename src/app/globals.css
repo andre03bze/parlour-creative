@@ -508,3 +508,37 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .scroll-rail > *, .scroll-rail-thumb { transition: none; }
 }
+
+
+/* ── Editorial cursor (fine pointers only; component mounts only when hover:hover and pointer:fine) ───────────── */
+.pc { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor, html.has-cursor * { cursor: none; }
+  html.has-cursor input, html.has-cursor textarea, html.has-cursor [contenteditable="true"] { cursor: text; }
+  html.has-cursor select, html.has-cursor .scroll-rail, html.has-cursor .scroll-rail * { cursor: pointer; }
+  .pc {
+    display: block; position: fixed; left: 0; top: 0; z-index: 90; pointer-events: none; will-change: transform;
+    color: var(--color-paper); mix-blend-mode: difference; opacity: 0; transition: opacity 250ms ease;
+  }
+  .pc[data-visible="1"] { opacity: 1; }
+  .pc[data-state="hide"] { opacity: 0; }
+  .pc-mark {
+    position: absolute; left: 0; top: 0; box-sizing: border-box; width: 7px; height: 7px; border: 1px solid currentColor;
+    border-radius: 50%; background: currentColor; transform: translate(-50%, -50%);
+    transition: width 260ms var(--ease-editorial), height 260ms var(--ease-editorial), border-radius 260ms var(--ease-editorial), background-color 260ms ease, transform 200ms var(--ease-editorial);
+  }
+  .pc[data-state="link"] .pc-mark { width: 30px; height: 30px; background: transparent; }
+  .pc[data-state="view"] .pc-mark, .pc[data-state="next"] .pc-mark, .pc[data-state="prev"] .pc-mark {
+    width: 54px; height: 26px; border-radius: 13px; background: transparent;
+  }
+  .pc[data-state="next"] .pc-mark, .pc[data-state="prev"] .pc-mark { width: 40px; }
+  .pc[data-down="1"] .pc-mark { transform: translate(-50%, -50%) scale(0.86); }
+  .pc-label {
+    position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); font-size: 0.5625rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; line-height: 1; white-space: nowrap; opacity: 0; transition: opacity 200ms ease;
+  }
+  .pc[data-state="view"] .pc-label, .pc[data-state="next"] .pc-label, .pc[data-state="prev"] .pc-label { opacity: 1; transition-delay: 90ms; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pc, .pc-mark, .pc-label { transition: none; }
+}

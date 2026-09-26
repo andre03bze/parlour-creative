@@ -85,6 +85,7 @@ export function WorkIndex({ projects }: { projects: CaseStudy[] }) {
           <li key={p.slug} className="border-b-2 border-ink">
             <Link
               href={`/work/${p.slug}`}
+              data-cursor="view"
               onPointerEnter={(e) => e.pointerType === "mouse" && setActive(p.slug)}
               onFocus={() => setActive(p.slug)}
               onBlur={() => setActive(null)}

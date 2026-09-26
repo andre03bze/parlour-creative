@@ -141,7 +141,7 @@ function WorkBrowserView({ projects, categories, markets, params }: Props & { pa
           <ul key={`${category}-${market}`} className="filter-in grid gap-x-6 gap-y-16 sm:grid-cols-2">
             {shown.map((p, i) => (
               <li key={p.slug} className={i % 2 === 1 ? "sm:mt-24" : ""}>
-                <Link href={`/work/${p.slug}`} className="group block">
+                <Link href={`/work/${p.slug}`} data-cursor="view" className="group block">
                   <Reveal media eager={i === 0}>
                     <div className="relative aspect-[4/3] overflow-hidden bg-paper-dim">
                       <ProjectVisual

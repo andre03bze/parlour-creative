@@ -5,6 +5,7 @@ import { Inter_Tight, Newsreader } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { JsonLd } from "@/components/JsonLd";
+import { Cursor } from "@/components/Cursor";
 import { ScrollRail } from "@/components/ScrollRail";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
@@ -119,6 +120,7 @@ export default async function RootLayout({ children, params }: { children: React
         <main id="main" tabIndex={-1} className="outline-none">{children}</main>
         <SiteFooter lang={lang} />
         <ScrollRail />
+        <Cursor />
         <LanguageSuggestion />
         </LangProvider>
       </body>

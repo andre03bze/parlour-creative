@@ -311,6 +311,7 @@ export default async function CaseStudyPage({ params }: Params) {
               <Link
                 key={label}
                 href={`/work/${p.slug}`}
+                data-cursor={next ? "next" : "prev"}
                 className={`group py-10 lg:py-16 ${i === 1 ? "sm:border-l sm:border-ink/60 sm:pl-10 sm:text-right" : "sm:pr-10"}`}
               >
                 <p className="text-meta">{t(label)}</p>
