@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@theme {
+  /* Color — see DESIGN-SYSTEM.md */
+  --color-paper: #f7f4ec;
+  --color-paper-dim: #efeae0;
+  --color-ink: #15160f;
+  --color-ink-soft: #4a4c3f;
+  --color-forest: #1e3a2b;
+  --color-forest-deep: #12241a;
+  --color-clay: #b15a34;
+  --color-line: #d9d2c0;
+
+  /* Type */
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  /* Breakpoints (default Tailwind sm/md/lg kept; custom names added) */
+  --breakpoint-xs: 23.4375rem; /* 375px */
+  --breakpoint-phone-lg: 26.875rem; /* 430px */
+
+  /* Motion */
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-forest);
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  .text-display {
+    font-size: clamp(2.75rem, 5vw + 1rem, 6rem);
+    font-weight: 480;
+  }
+
+  .text-h2 {
+    font-size: clamp(2rem, 2.5vw + 1rem, 3.25rem);
+    font-weight: 480;
+  }
+
+  .text-h3 {
+    font-size: clamp(1.375rem, 1vw + 1rem, 1.75rem);
+    font-weight: 520;
+  }
+
+  .text-meta {
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+
+  .container-page {
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 64rem) {
+    .container-page {
+      padding-inline: 4rem;
+    }
+  }
+
+  .prose-column {
+    max-width: 68ch;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    transition:
+      opacity 700ms var(--ease-editorial),
+      transform 700ms var(--ease-editorial);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
