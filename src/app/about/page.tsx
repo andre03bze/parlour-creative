@@ -15,7 +15,8 @@ export default function AboutPage() {
         </h1>
       </Section>
 
-      <Section className="grid gap-16 lg:grid-cols-2">
+      <Section>
+        <div className="grid gap-16 lg:grid-cols-2">
         <div>
           <div className="aspect-[3/4] bg-paper-dim" />
           <h2 className="text-h3 mt-6">Laura Curridor</h2>
@@ -53,6 +54,7 @@ export default function AboutPage() {
             Blue Ocean Belize&rsquo;s portfolio, including 120+ production
             hours and 14 videos in a single period.
           </p>
+        </div>
         </div>
       </Section>
 

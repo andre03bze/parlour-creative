@@ -135,3 +135,10 @@
     }
   }
 }
+
+/* No JS (or it failed to load): never leave content permanently hidden —
+   brief rule 30, "no critical content should depend on animation." */
+.no-js .reveal {
+  opacity: 1;
+  transform: none;
+}

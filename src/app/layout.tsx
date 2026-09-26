@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Fraunces, Inter } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -60,8 +61,15 @@ const websiteSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
+    <html
+      lang="en"
+      className={`no-js ${fraunces.variable} ${inter.variable}`}
+      suppressHydrationWarning
+    >
       <body>
+        <Script id="js-enabled" strategy="beforeInteractive">
+          {"document.documentElement.classList.remove('no-js')"}
+        </Script>
         <JsonLd data={organizationSchema} />
         <JsonLd data={websiteSchema} />
         <a

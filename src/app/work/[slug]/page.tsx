@@ -89,7 +89,8 @@ export default async function CaseStudyPage({
         </div>
       )}
 
-      <Section className="grid gap-16 lg:grid-cols-[1fr_1.6fr]">
+      <Section>
+        <div className="grid gap-16 lg:grid-cols-[1fr_1.6fr]">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <p className="text-meta">Services</p>
           <ul className="mt-3 space-y-1 text-sm text-ink-soft">
@@ -191,6 +192,7 @@ export default async function CaseStudyPage({
               ← Back to Work
             </Link>
           </div>
+        </div>
         </div>
       </Section>
     </article>
