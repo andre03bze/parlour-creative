@@ -49,11 +49,20 @@ export const contact = {
 } as const;
 
 /**
- * Social handles are NOT yet claimed (see CONTENT-GAPS.md). Keep this empty
- * — an empty array renders no social icons — rather than link to handles
- * that may not exist or belong to someone else.
+ * Social / contact channels — the single source for icons in the footer, menu and contact page.
+ * WhatsApp is a confirmed direct contact channel. Instagram, Facebook and LinkedIn render only once their final
+ * https URL is supplied via NEXT_PUBLIC_SOCIAL_INSTAGRAM / _FACEBOOK / _LINKEDIN (see .env.example); until then they
+ * are omitted rather than linking to handles that may not exist.
  */
-export const socialLinks: { label: string; href: string }[] = [];
+const httpsUrl = (v?: string) => (v && /^https:\/\//.test(v) ? v : null);
+const channels = [
+  { id: "whatsapp", href: contact.whatsappHref },
+  { id: "instagram", href: httpsUrl(process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM) },
+  { id: "facebook", href: httpsUrl(process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK) },
+  { id: "linkedin", href: httpsUrl(process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN) },
+] as const;
+export type ChannelId = (typeof channels)[number]["id"];
+export const socialChannels: { id: ChannelId; href: string }[] = channels.flatMap((c) => (c.href ? [{ id: c.id, href: c.href }] : []));
 
 export const footerTagline = "Positioning / Story / Performance / Sales";
 

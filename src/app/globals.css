@@ -478,3 +478,33 @@ html {
   .rise > span { transform: none; transition: none; }
   .band-rise, .slide-x, .crop-scroll { animation: none; }
 }
+
+
+/* ── Scroll rail (desktop / tablet, fine pointer only; native scrollbar stays everywhere else) ───────────────── */
+.scroll-rail { display: none; }
+@media (min-width: 64rem) and (pointer: fine) {
+  html { scrollbar-width: none; }
+  html::-webkit-scrollbar { display: none; }
+  /* The rail itself carries the blend (no opacity/transform on it, which would isolate the backdrop): paper-difference is
+     dark on paper, light on dark bands and photography, so one rail reads on every surface and palette. */
+  .scroll-rail {
+    display: block; position: fixed; top: 0; right: 0; bottom: 0; z-index: 80; width: 16px;
+    color: var(--color-paper); mix-blend-mode: difference; cursor: pointer; touch-action: none;
+  }
+  .scroll-rail > * { opacity: 0; transition: opacity 500ms var(--ease-editorial); }
+  .scroll-rail[data-scrollable="1"] > * { opacity: 1; }
+  /* hairline track */
+  .scroll-rail::before { content: ""; position: absolute; top: 0; bottom: 0; right: 7px; width: 1px; background: currentColor; opacity: 0.22; }
+  .scroll-rail-thumb {
+    position: absolute; top: 0; right: 5px; width: 4px; height: var(--rail-h, 60px); border-radius: 4px; background: currentColor;
+    transform: translate3d(0, var(--rail-y, 0px), 0); will-change: transform;
+    transition: width 400ms var(--ease-editorial), right 400ms var(--ease-editorial), opacity 500ms var(--ease-editorial);
+  }
+  /* a little more defined as the page is travelled */
+  .scroll-rail[data-scrollable="1"] .scroll-rail-thumb { opacity: calc(0.55 + var(--rail-p, 0) * 0.4); }
+  .scroll-rail:hover .scroll-rail-thumb,
+  .scroll-rail[data-dragging="1"] .scroll-rail-thumb { width: 6px; right: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-rail > *, .scroll-rail-thumb { transition: none; }
+}

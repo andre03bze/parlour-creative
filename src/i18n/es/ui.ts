@@ -186,4 +186,10 @@ export const esUi: Record<string, string> = {
   "Start again": "Empezar de nuevo",
   "Back": "Atrás",
   "Question {n} of {total}": "Pregunta {n} de {total}",
+  "Parlour on social media and WhatsApp": "Parlour en redes sociales y WhatsApp",
+  "opens in a new tab": "se abre en una pestaña nueva",
+  "Contact Parlour on WhatsApp": "Escribe a Parlour por WhatsApp",
+  "Parlour Creative on Instagram": "Parlour Creative en Instagram",
+  "Parlour Creative on Facebook": "Parlour Creative en Facebook",
+  "Parlour Creative on LinkedIn": "Parlour Creative en LinkedIn",
 };

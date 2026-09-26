@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/Logo";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { SocialLinks } from "@/components/SocialLinks";
 import Link, { useT } from "@/i18n/client";
 import { stripLang } from "@/i18n/config";
 import { contact, primaryNav, sectorNav } from "@/lib/site";
@@ -202,6 +203,9 @@ export function SiteHeader() {
                   </li>
                 ))}
               </ul>
+            </div>
+            <div className="sm:col-span-2">
+              <SocialLinks t={t} className="-ml-3" />
             </div>
           </div>
         </div>

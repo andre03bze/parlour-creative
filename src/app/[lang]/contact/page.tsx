@@ -2,6 +2,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { PageHead } from "@/components/editorial";
 import { pageLang, pageMeta, type LangParams } from "@/i18n/page";
 import { accent, rich } from "@/i18n/rich";
+import { SocialLinks } from "@/components/SocialLinks";
 import { contact } from "@/lib/site";
 
 export const generateMetadata = ({ params }: LangParams) =>
@@ -30,6 +31,7 @@ export default async function ContactPage({ params }: LangParams) {
             <a href={`mailto:${contact.email}`} className="block text-2xl underline-offset-4 hover:underline">
               {contact.email}
             </a>
+            <SocialLinks t={t} className="-ml-3 mt-3" />
           </div>
           <div>
             <p className="text-meta">{t("Based in")}</p>

@@ -2,7 +2,8 @@ import Link from "@/i18n/client";
 import { getT } from "@/i18n/t";
 import type { Lang } from "@/i18n/config";
 import { Logo } from "@/components/Logo";
-import { contact, footerNav, footerTagline, sectorNav, socialLinks } from "@/lib/site";
+import { SocialLinks } from "@/components/SocialLinks";
+import { contact, footerNav, footerTagline, sectorNav } from "@/lib/site";
 
 export function SiteFooter({ lang }: { lang: Lang }) {
   const t = getT(lang);
@@ -38,13 +39,7 @@ export function SiteFooter({ lang }: { lang: Lang }) {
           <p className="mt-3 text-paper/85">{t("Serving the Americas")}</p>
           <a href={`mailto:${contact.email}`} className="mt-3 block py-1 hover:underline">{contact.email}</a>
           <a href={contact.whatsappHref} className="block py-1 hover:underline">{contact.whatsapp} · WhatsApp</a>
-          {socialLinks.length > 0 && (
-            <ul className="mt-4 space-y-1">
-              {socialLinks.map((s) => (
-                <li key={s.href}><a href={s.href} className="hover:underline">{s.label}</a></li>
-              ))}
-            </ul>
-          )}
+          <SocialLinks t={t} className="-ml-3 mt-2" />
         </div>
 
         <nav aria-label={t("Footer")} className="text-sm">
