@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useSyncExternalStore } from "react";
 
 /**
@@ -38,6 +39,18 @@ function apply(id: string) {
 
 export function ThemeSwitcher() {
   const theme = useSyncExternalStore(subscribe, read, () => "current");
+  const pathname = usePathname();
+
+  // The boot script only runs on a full document load; re-apply the chosen palette (query string first, then storage)
+  // after language switches and on 404/error pages so the selection follows the reviewer across the whole site.
+  useEffect(() => {
+    try {
+      const q = new URLSearchParams(window.location.search).get("theme");
+      const t = q ?? localStorage.getItem("parlourTheme");
+      if (t === "current") return apply("current");
+      if (t && /^(a|b|c)$/.test(t) && document.documentElement.dataset.theme !== t) apply(t);
+    } catch {}
+  }, [pathname]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
