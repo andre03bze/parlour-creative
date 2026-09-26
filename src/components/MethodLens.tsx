@@ -38,7 +38,7 @@ export function MethodLens({ stages, total }: { stages: LensStage[]; total: numb
                   onFocus={() => setActive(s.name)}
                   onClick={() => setActive(s.name)}
                   className="flex w-full items-baseline gap-4 py-3 text-left transition-opacity duration-500 ease-link lg:py-4"
-                  style={{ opacity: on ? 1 : 0.35 }}
+                  style={{ opacity: on ? 1 : 0.5 }}
                 >
                   <span className="w-8 shrink-0 text-[0.6875rem] font-medium tracking-[0.14em] text-ink-soft">{String(i + 1).padStart(2, "0")}</span>
                   <span className="text-index !text-[clamp(2.25rem,1rem+4.2vw,5rem)] leading-none">{t(s.name)}</span>

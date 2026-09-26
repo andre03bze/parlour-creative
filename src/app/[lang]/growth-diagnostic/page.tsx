@@ -8,7 +8,7 @@ export const generateMetadata = ({ params }: LangParams) =>
     params,
     "/growth-diagnostic",
     "Growth Diagnostic",
-    "Find where your marketing is losing sales in three weeks: a Parlour Growth Diagnostic audits brand, website, ads, content, lead handling and sales hand-off, and delivers a 90-day plan. $4,500, credited to month one if you sign a retainer within 30 days."
+    "A three-week audit of brand, website, ads, content and lead handling, delivered as a 90-day plan. $4,500, credited to month one if you sign a retainer within 30 days."
   );
 
 const audits = [

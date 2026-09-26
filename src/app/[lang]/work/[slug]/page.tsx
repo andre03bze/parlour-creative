@@ -14,7 +14,8 @@ import { SplitReveal } from "@/components/SplitReveal";
 import { categoryLabels, getAdjacentCaseStudies, getCaseStudy, getPublishedCaseStudies } from "@/content/case-studies";
 import { localizeCase } from "@/content/localize";
 import { isLang, langs, localePath } from "@/i18n/config";
-import { alternatesFor, ogLocale } from "@/i18n/meta";
+import { alternatesFor, ogImage, ogLocale } from "@/i18n/meta";
+import { getT } from "@/i18n/t";
 import { pageLang } from "@/i18n/page";
 import { siteUrl } from "@/lib/site";
 
@@ -32,8 +33,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!base || !isLang(lang)) return {};
   const project = localizeCase(base, lang);
   const title = project.client;
+  // Client + what the work was, in search-friendly words ("Rogers Sports & Media: Broadcast, Sports and media").
+  const heading = `${project.client}: ${project.sector.replace(/ · /g, ", ")}`;
+  const image = project.cover
+    ? { url: project.cover.src, alt: project.cover.alt }
+    : { ...ogImage, alt: getT(lang)(ogImage.alt) };
   return {
-    title,
+    title: heading,
     description: clip(`${project.tagline} ${project.challenge}`, 158),
     alternates: alternatesFor(lang, `/work/${project.slug}`),
     openGraph: {
@@ -43,9 +49,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       locale: ogLocale(lang),
       type: "website",
       siteName: "Parlour Creative",
-      images: project.cover ? [{ url: project.cover.src, alt: project.cover.alt }] : undefined,
+      images: [image],
     },
-    twitter: { card: "summary_large_image", title: `${title} · Parlour Creative`, description: project.tagline, images: project.cover ? [project.cover.src] : undefined },
+    twitter: { card: "summary_large_image", title: `${title} · Parlour Creative`, description: project.tagline, images: [image.url] },
   };
 }
 
