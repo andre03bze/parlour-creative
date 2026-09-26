@@ -10,7 +10,14 @@
  */
 export const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "1";
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://parlourcreative.ca";
+/**
+ * Public base URL for canonical/OG/hreflang/sitemap. The final domain is not decided yet, so nothing is hard-coded:
+ * set NEXT_PUBLIC_SITE_URL for the launch domain; otherwise the Vercel production URL (or localhost) is used.
+ */
+export const siteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000")
+).replace(/\/$/, "");
 
 /** Menu overlay (Gladstone-style single menu). Insights joins once a real article exists. */
 export const primaryNav = [
