@@ -192,4 +192,5 @@ export const esUi: Record<string, string> = {
   "Parlour Creative on Instagram": "Parlour Creative en Instagram",
   "Parlour Creative on Facebook": "Parlour Creative en Facebook",
   "Parlour Creative on LinkedIn": "Parlour Creative en LinkedIn",
+  "not available yet": "aún no disponible",
 };

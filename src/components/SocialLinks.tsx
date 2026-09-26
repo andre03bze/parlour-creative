@@ -38,6 +38,17 @@ export function SocialLinks({ t, className = "" }: { t: T; className?: string })
     <ul className={`flex flex-wrap items-center ${className}`} aria-label={t("Parlour on social media and WhatsApp")}>
       {socialChannels.map(({ id, href }) => (
         <li key={id}>
+          {href === null ? (
+            <span
+              role="img"
+              aria-label={`${t(labels[id])} (${t("not available yet")})`}
+              className="inline-flex h-11 w-11 cursor-default items-center justify-center opacity-35"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+                {icons[id]}
+              </svg>
+            </span>
+          ) : (
           <a
             href={href}
             target="_blank"
@@ -49,6 +60,7 @@ export function SocialLinks({ t, className = "" }: { t: T; className?: string })
               {icons[id]}
             </svg>
           </a>
+          )}
         </li>
       ))}
     </ul>
