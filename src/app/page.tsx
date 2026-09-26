@@ -50,7 +50,7 @@ export default function HomePage() {
       {/* 1 — Identity: full-bleed film with the giant wordmark (small header logo stays hidden until scroll) */}
       <section data-hero aria-label="Parlour Creative" className="relative h-[100svh] min-h-[34rem] w-full overflow-hidden bg-coal text-white">
         <Image
-          src="/work/blue-ocean-belize/hero-poster-2200w.webp"
+          src="/hero/hero-poster.webp"
           alt=""
           fill
           priority
@@ -59,8 +59,8 @@ export default function HomePage() {
           className="object-cover"
         />
         <HeroVideo
-          src="/work/blue-ocean-belize/hero-loop.mp4"
-          poster="/work/blue-ocean-belize/hero-poster-2200w.webp"
+          src="/hero/hero.mp4"
+          poster="/hero/hero-poster.webp"
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/25" />
