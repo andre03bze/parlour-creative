@@ -1,22 +1,27 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Fraunces, Inter } from "next/font/google";
+import { Inter_Tight, Newsreader } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { JsonLd } from "@/components/JsonLd";
+import { SmoothScroll } from "@/components/SmoothScroll";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { contact, siteUrl } from "@/lib/site";
 import "./globals.css";
 
-const fraunces = Fraunces({
+// Existing Parlour identity: Neue Haas Unica / Helvetica Neue (Adobe font, not licensed for
+// self-hosting here) → closest open-licence match Inter Tight, tight-tracked. Newsreader is the
+// site's existing accent serif. See DESIGN-SYSTEM.md.
+const sans = Inter_Tight({
   subsets: ["latin"],
-  variable: "--font-fraunces",
-  axes: ["opsz", "SOFT"],
+  variable: "--font-sans-brand",
   display: "swap",
 });
 
-const inter = Inter({
+const serif = Newsreader({
   subsets: ["latin"],
-  variable: "--font-inter",
+  style: ["italic"],
+  variable: "--font-serif",
   display: "swap",
 });
 
@@ -63,10 +68,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`no-js ${fraunces.variable} ${inter.variable}`}
+      className={`no-js ${sans.variable} ${serif.variable}`}
       suppressHydrationWarning
     >
       <body>
+        <Script id="theme-init" strategy="beforeInteractive">
+          {"(function(){try{var q=new URLSearchParams(location.search).get('theme');var t=q||localStorage.getItem('parlourTheme');if(t&&/^(a|b|c)$/.test(t)){document.documentElement.dataset.theme=t;localStorage.setItem('parlourTheme',t)}else if(q==='current'){localStorage.removeItem('parlourTheme')}}catch(e){}})()"}
+        </Script>
         <Script id="js-enabled" strategy="beforeInteractive">
           {"document.documentElement.classList.remove('no-js')"}
         </Script>
@@ -74,10 +82,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd data={websiteSchema} />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:bg-forest focus:px-4 focus:py-2 focus:text-paper"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:bg-coal-soft focus:px-4 focus:py-2 focus:text-paper"
         >
           Skip to content
         </a>
+        <SmoothScroll />
+        <ThemeSwitcher />
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />

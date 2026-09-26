@@ -1,33 +1,47 @@
 import type { Metadata } from "next";
-import { Section } from "@/components/ui";
 import { ContactForm } from "@/components/ContactForm";
+import { PageHead } from "@/components/editorial";
 import { contact } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Start a project with Parlour Creative.",
+  description:
+    "Start a conversation with Parlour Creative: tell us about the development, property, hotel or founder story. Based in Belize, serving the Americas.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
   return (
-    <Section className="pt-16 lg:pt-20">
-      <div className="grid gap-16 lg:grid-cols-[1fr_1.4fr]">
-        <div>
-          <h1 className="text-display">Start a project.</h1>
-          <p className="prose-column mt-6 text-ink-soft">
-            Prefer to talk?
+    <>
+      <PageHead
+        eyebrow="Contact"
+        title={
+          <>
+            Start a <span className="accent">conversation.</span>
+          </>
+        }
+      />
+      <div className="container-page grid gap-16 border-t border-ink/60 pb-28 pt-14 lg:grid-cols-[1fr_1.6fr] lg:gap-24 lg:pb-40 lg:pt-20">
+        <div className="space-y-10">
+          <p className="text-lead prose-column">
+            Tell us about the development, property, hotel or story. Laura reviews every enquiry and replies within one business day.
           </p>
-          <div className="mt-4 space-y-1 text-sm">
-            <a href={contact.whatsappHref} className="block font-medium text-forest hover:underline">
+          <div>
+            <p className="text-meta">Prefer to talk?</p>
+            <a href={contact.whatsappHref} className="mt-2 block text-2xl underline-offset-4 hover:underline">
               WhatsApp {contact.whatsapp}
             </a>
-            <a href={`mailto:${contact.email}`} className="block font-medium text-forest hover:underline">
+            <a href={`mailto:${contact.email}`} className="block text-2xl underline-offset-4 hover:underline">
               {contact.email}
             </a>
+          </div>
+          <div>
+            <p className="text-meta">Based in</p>
+            <p className="mt-2 text-lg">Belize, serving the Americas</p>
           </div>
         </div>
         <ContactForm />
       </div>
-    </Section>
+    </>
   );
 }

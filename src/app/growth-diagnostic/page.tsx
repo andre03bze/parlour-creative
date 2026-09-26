@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Button, Eyebrow, Section } from "@/components/ui";
+import { Block, CtaBand, RowList } from "@/components/editorial";
+import { Button } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Growth Diagnostic",
-  description: "Find where your marketing is losing sales, in three weeks. $4,500, credited to month one if you sign a retainer within 30 days.",
+  description:
+    "Find where your marketing is losing sales in three weeks: a Parlour Growth Diagnostic audits brand, website, ads, content, lead handling and sales hand-off, and delivers a 90-day plan. $4,500, credited to month one if you sign a retainer within 30 days.",
+  alternates: { canonical: "/growth-diagnostic" },
 };
 
 const audits = [
@@ -14,61 +17,90 @@ const audits = [
   "Lead handling",
   "Sales hand-off",
   "Competitor landscape",
-  "Buyer / guest profile",
+  "Buyer or guest profile",
 ];
 
 export default function GrowthDiagnosticPage() {
   return (
     <>
-      <Section className="pb-12 pt-16 lg:pt-20">
-        <Eyebrow>Start here</Eyebrow>
-        <h1 className="text-display mt-4 max-w-3xl">Find where your marketing is losing sales.</h1>
-        <p className="prose-column mt-6 text-lg text-ink-soft">
-          A three-week audit of brand, website, ads, content, lead handling
-          and sales hand-off, benchmarked against your competitors and your
-          own buyer or guest profile — delivered as a 90-day growth plan,
-          presented live.
-        </p>
-        <div className="mt-10 flex flex-wrap items-end gap-8">
-          <div>
-            <p className="text-meta">Price</p>
-            <p className="font-display text-3xl">$4,500 USD</p>
-            <p className="mt-1 text-sm text-ink-soft">One-time — credited to month one if you sign a retainer within 30 days</p>
-          </div>
-          <div>
-            <p className="text-meta">Term</p>
-            <p className="font-display text-3xl">3 weeks</p>
+      {/* Dark opening: the offer as its own editorial "division" page */}
+      <section data-hero data-dark className="bg-coal text-paper">
+        <div className="container-page flex min-h-[86svh] flex-col justify-end pb-14 pt-40 lg:pb-20">
+          <p className="text-meta mb-6 !text-paper/70">Parlour Growth Diagnostic · Start here</p>
+          <h1 className="text-display max-w-[14ch]">
+            Find the <span className="accent">leak.</span>
+          </h1>
+          <div className="mt-10 grid gap-10 lg:mt-16 lg:grid-cols-[1.3fr_1fr] lg:items-end">
+            <p className="text-lead max-w-2xl text-paper/85">
+              A three-week audit of brand, website, ads, content, lead handling and sales hand-off, benchmarked against
+              your competitors and your own buyer or guest profile, delivered as a 90-day growth plan, presented live.
+            </p>
+            <div>
+              <Button href="/contact" variant="onDark">Start a Growth Diagnostic</Button>
+            </div>
           </div>
         </div>
-        <div className="mt-10">
-          <Button href="/contact">Start a Growth Diagnostic</Button>
-        </div>
-      </Section>
+      </section>
 
-      <Section className="bg-paper-dim">
-        <h2 className="text-h3">What we audit</h2>
-        <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-4">
-          {audits.map((item) => (
-            <p key={item} className="border-t border-ink pt-3 text-sm font-medium">{item}</p>
-          ))}
-        </div>
-      </Section>
-
-      <Section>
-        <h2 className="text-h3 max-w-xl">Who it&rsquo;s for</h2>
-        <p className="prose-column mt-4 text-ink-soft">
-          Any qualified prospect who knows marketing isn&rsquo;t working but
-          can&rsquo;t say why — a developer, brokerage, or hotel with real
-          budget and no one currently owning the commercial result.
+      <Block label="What it is">
+        <p className="text-lead prose-column">
+          For prospects who know marketing isn&rsquo;t working but can&rsquo;t say why. In three weeks we show you where
+          attention, enquiries and sales are leaking, and what to do about it first.
         </p>
-      </Section>
+      </Block>
 
-      <Section dark className="text-center">
-        <h2 className="text-h2 mx-auto max-w-xl">Three weeks. A clear answer.</h2>
+      <Block label="What we audit">
+        <RowList items={audits} cols={2} />
+      </Block>
+
+      <Block label="What you receive">
+        <RowList
+          items={[
+            "A competitor scan",
+            "A buyer or guest profile",
+            "A 90-day growth plan, presented live",
+          ]}
+        />
+      </Block>
+
+      <Block label="Who it's for">
+        <p className="prose-column text-lg">
+          Any qualified prospect who knows marketing isn&rsquo;t working but can&rsquo;t say why: a developer, brokerage
+          or hotel with real budget and no one currently owning the commercial result.
+        </p>
+      </Block>
+
+      <Block label="Timeline and investment" dim>
+        <dl className="grid gap-10 sm:grid-cols-2">
+          <div className="border-t border-ink pt-4">
+            <dt className="text-meta">Timeline</dt>
+            <dd className="text-h2 mt-3">3 weeks</dd>
+          </div>
+          <div className="border-t border-ink pt-4">
+            <dt className="text-meta">Investment</dt>
+            <dd className="text-h2 mt-3">$4,500 USD</dd>
+            <dd className="mt-3 text-sm text-ink-soft">
+              One-time, credited to month one if you sign a retainer within 30 days.
+            </dd>
+          </div>
+        </dl>
+      </Block>
+
+      <Block label="After the diagnostic">
+        <p className="prose-column text-ink-soft">
+          If you want us to run the plan, the diagnostic is credited to your first month and we move into an ongoing
+          engagement. Retainers start at $5,000 USD a month.
+        </p>
         <div className="mt-8">
-          <Button href="/contact">Book a strategy call</Button>
+          <Button href="/services" variant="secondary">How we work with clients</Button>
         </div>
-      </Section>
+      </Block>
+
+      <CtaBand
+        title={<>Three weeks. A clear <span className="accent">answer.</span></>}
+        primary={{ label: "Start a Growth Diagnostic", href: "/contact" }}
+        secondary={{ label: "Book a strategy call", href: "/contact" }}
+      />
     </>
   );
 }

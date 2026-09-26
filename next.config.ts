@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    // The former "Laura — Artform" page is gone: those projects are now regular Parlour case studies.
+    return [{ source: "/work/laura-artform", destination: "/work", permanent: true }];
+  },
   async headers() {
     return [
       {

@@ -49,3 +49,18 @@ judgment call below.
 `/work/[slug]` reads from `src/content/case-studies.ts`. Heritage renders with a
 visoff differentiator (see `DESIGN-SYSTEM.md` — a persistent "Laura — Artform,
 historical" label, never the Parlour attribution pill).
+
+
+---
+
+## v2 update — Gladstone-structured rebuild
+
+- **Navigation:** wordmark + single Menu overlay: Work · About · Services · Site to Sales (`/approach`) ·
+  Growth Diagnostic · Contact. Sector pages (Real Estate, Hospitality, Founders, Belize) are secondary links in the
+  overlay and footer. **Insights** joins the menu when the first real article exists (page + model are built).
+- **Homepage order:** film hero (identity) → Work index → marquee → proof band → Site to Sales → sectors →
+  Growth Diagnostic → people/region. Work appears immediately after the hero.
+- **Work:** `/work` = statement + Industry chips + Thumbnail/List. `/work/[slug]` = Gladstone-style project page,
+  data-driven from `src/content/case-studies.ts` (new fields: `tagline`, `disciplines`, `cover`, `heroVideo`, `sequence`).
+- **Site to Sales path (canonical):** Site → Strategy → Brand → Story → Experience → Distribution → Sales — single source `siteToSales` in `src/lib/site.ts`; "Digital" survives only as a services discipline on `/services`.
+- CBRE is a case study only; no CBRE routing/components are reused.

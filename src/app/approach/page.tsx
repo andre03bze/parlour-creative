@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Button, Eyebrow, Section } from "@/components/ui";
+import { Block, CtaBand, PageHead, SiteToSalesPath } from "@/components/editorial";
 
 export const metadata: Metadata = {
-  title: "Approach",
-  description: "From site to sales: how Parlour runs commercial strategy, project coordination, brand and performance as one system.",
+  title: "Site to Sales: Our Approach",
+  description:
+    "From site to sales: how Parlour runs commercial strategy, project coordination, brand and performance as one system for developments, hotels and place-led brands.",
+  alternates: { canonical: "/approach" },
 };
 
 const steps = [
@@ -14,77 +16,72 @@ const steps = [
   { step: "Learn", body: "Report against the KPIs that matter and adjust the system, not just the ads." },
 ];
 
+const chain = [
+  { label: "Commercial strategy", body: "Who the project is for, what it should be, and how it will sell." },
+  {
+    label: "Project coordination",
+    body: "Working with land, architects, engineers, planners, permitting and building-solutions partners to bring it to life.",
+  },
+  { label: "Brand, story and campaigns", body: "The identity, content and integrated campaigns." },
+  { label: "Performance and sales", body: "Paid media, lead capture, CRM and sales tools." },
+];
+
 export default function ApproachPage() {
   return (
     <>
-      <Section className="pb-12 pt-16 lg:pt-20">
-        <Eyebrow>Beyond marketing</Eyebrow>
-        <h1 className="text-display mt-4 max-w-3xl">We can start before the first drawing.</h1>
-        <p className="prose-column mt-6 text-lg text-ink-soft">
-          Our roots are in creative advertising and design-build. So Parlour
-          can work alongside your architects, engineers, planners and
-          permitting team from day one, making sure the commercial strategy
-          shapes the project, then building the brand, the experiences and
-          the campaigns that sell it.
-        </p>
-        <p className="prose-column mt-4 text-sm text-ink-soft">
-          Parlour coordinates architects, engineers and permitting through
-          partners — it does not hold those licences itself.
-        </p>
-      </Section>
+      <PageHead
+        eyebrow="Site to Sales"
+        image={{
+          src: "/work/caves-branch-river-estates/river-band-1440w.webp",
+          alt: "Wide aerial view of the Caves Branch River winding through jungle in Belize",
+        }}
+        title={
+          <>
+            We can start <span className="accent">before the first drawing.</span>
+          </>
+        }
+        lead="Our roots are in creative advertising and design-build. So Parlour can work alongside your architects, engineers, planners and permitting team from day one, making sure the commercial strategy shapes the project, then building the brand, the experiences and the campaigns that sell it."
+      />
 
-      <Section className="bg-paper-dim">
-        <h2 className="text-h2 max-w-xl">Commercial strategy → project coordination → brand and experiences → performance and sales.</h2>
-        <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              label: "Commercial strategy",
-              body: "Who the project is for, what it should be, and how it will sell.",
-            },
-            {
-              label: "Project coordination",
-              body: "Working with land, architects, engineers, planners, permitting and building-solutions partners to bring it to life.",
-            },
-            {
-              label: "Brand, story and campaigns",
-              body: "The identity, content and integrated campaigns.",
-            },
-            {
-              label: "Performance and sales",
-              body: "Paid media, lead capture, CRM and sales tools.",
-            },
-          ].map((item) => (
-            <div key={item.label} className="border-t border-ink pt-5">
-              <p className="font-display text-lg">{item.label}</p>
-              <p className="mt-2 text-sm text-ink-soft">{item.body}</p>
-            </div>
+      <div className="container-page pb-20 lg:pb-32">
+        <SiteToSalesPath />
+        <p className="text-meta mt-6 max-w-xl">
+          Parlour coordinates architects, engineers and permitting through partners. It does not hold those licences itself.
+        </p>
+      </div>
+
+      <Block label="How the work runs">
+        <ul>
+          {chain.map((item) => (
+            <li key={item.label} className="grid gap-2 border-t border-ink/25 py-5 first:border-t-ink/60 sm:grid-cols-[14rem_1fr]">
+              <p className="text-h3">{item.label}</p>
+              <p className="prose-column text-ink-soft">{item.body}</p>
+            </li>
           ))}
-        </div>
-        <p className="prose-column mt-14 text-ink-soft">
-          From real estate to hotels, events and brand partnerships, if
-          it&rsquo;s built around a place, we can help bring it to life.
+        </ul>
+        <p className="prose-column mt-10 text-ink-soft">
+          From real estate to hotels, events and brand partnerships, if it&rsquo;s built around a place, we can help bring
+          it to life.
         </p>
-      </Section>
+      </Block>
 
-      <Section>
-        <h2 className="text-h2 max-w-xl">Clarity before activity.</h2>
-        <ol className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
+      <Block label={<>Clarity before <span className="accent">activity.</span></>} dim>
+        <ol>
           {steps.map((item, i) => (
-            <li key={item.step} className="border-t border-ink pt-5">
-              <p className="text-meta">{`0${i + 1}`}</p>
-              <p className="mt-2 font-display text-lg">{item.step}</p>
-              <p className="mt-2 text-sm text-ink-soft">{item.body}</p>
+            <li key={item.step} className="grid gap-2 border-t border-ink/25 py-5 first:border-t-ink/60 sm:grid-cols-[4rem_14rem_1fr]">
+              <span className="text-meta pt-2">{String(i + 1).padStart(2, "0")}</span>
+              <p className="text-h3">{item.step}</p>
+              <p className="prose-column text-ink-soft">{item.body}</p>
             </li>
           ))}
         </ol>
-      </Section>
+      </Block>
 
-      <Section dark className="text-center">
-        <h2 className="text-h2 mx-auto max-w-xl">See it applied to a real project.</h2>
-        <div className="mt-8">
-          <Button href="/work/caves-branch-river-estates">Read the Caves Branch case study</Button>
-        </div>
-      </Section>
+      <CtaBand
+        title="See it applied to a real project."
+        primary={{ label: "Caves Branch River Estates", href: "/work/caves-branch-river-estates" }}
+        secondary={{ label: "Growth Diagnostic", href: "/growth-diagnostic" }}
+      />
     </>
   );
 }

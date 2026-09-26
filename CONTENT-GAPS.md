@@ -17,9 +17,7 @@ directly from the playbook's own "Open items" list plus gaps found while buildin
 - [ ] **Photography/video for Blue Ocean, Offi, STELCOR, Stephen Mater.** None
       supplied as files. (Caves Branch has real usable photography — see
       `ASSET-INVENTORY.md`.)
-- [ ] **Artform imagery — explicit rights clearance**, or original files Laura holds,
-      before publishing any Artform project photography (see `ASSET-INVENTORY.md`
-      for why this isn't done automatically).
+- [x] Artform-site imagery/video: authorised by Laura (site owner) via Andre, 2026-09-25 — migrated as Parlour case studies.
 
 ## Confirmations needed (drafted, not final)
 
@@ -32,9 +30,7 @@ directly from the playbook's own "Open items" list plus gaps found while buildin
       confirm")
 - [ ] Andre's bio: 1–2 lines on his background before Parlour, notable clients or
       specialties (drone/documentary) — playbook flags this gap itself
-- [ ] STELCOR Solutions case study — playbook status is "needs sign-off"; page is
-      built but should stay unlinked/unpublished until confirmed (see
-      `PROJECT-INVENTORY.md`)
+- [x] STELCOR Solutions — approved for publication (Andre, 2026-09-25); gate removed. Still needs imagery and any shareable results.
 - [ ] The "number one in Canada" Artform claim — do not publish; exact wording/source
       was never supplied, only the *task* of confirming it was checked off
 
@@ -87,3 +83,32 @@ directly from the playbook's own "Open items" list plus gaps found while buildin
 
 - [ ] Mexico/Yucatán, Costa Rica, Panama, Colombia, Argentina, Uruguay pages —
       explicitly deferred per playbook's market-tier table (2027+) and brief rule 25.
+
+
+---
+
+## v2 additions
+
+- [ ] **Media slots (temporary, clearly labelled on the site):** Offi Belize, Stephen Mater, STELCOR
+      show a typographic "Media slot · pending" tile. Replace by setting `cover` / `sequence` in `src/content/case-studies.ts`.
+- [ ] **Blue Ocean:** confirm client permission for the lifestyle photography + drone footage; model releases for the
+      couple; results and testimonial still pending (metrics show "Figure pending").
+- [ ] **Neue Haas Unica licence** — the current site references it via Adobe Fonts but doesn't load it; site uses Inter Tight as the
+      open-licence stand-in (see `DESIGN-SYSTEM.md`).
+- [x] **Site-to-Sales wording:** now `Site → Strategy → Brand → Story → Experience → Distribution → Sales` (per Andre; source: `siteToSales` in `src/lib/site.ts`).
+- [ ] **Terminology:** current site says *Position → Expression → Demand*; the playbook (authoritative) says
+      *Position → Express → Perform → Sell*. The new site follows the playbook; "Constructed intelligence. Human measure." is carried from the old site as voice.
+- [ ] **About banner** uses Blue Ocean drone imagery until a team photograph exists.
+- [ ] Insights is intentionally not in the menu or sitemap until a real article ships.
+- [ ] **LAUNCH BLOCKER — contact form delivery not wired.** The form validates (native browser validation) and posts to
+      `/api/contact`, which returns **503 `delivery_not_configured`** until a provider exists; the UI then says the enquiry was
+      **not** sent and shows WhatsApp/email, and a "Development notice" sits above the form. It never reports success.
+      **Integration point:** `src/lib/deliver-enquiry.ts` — implement `deliverEnquiry()` (email to laura@parlourcreative.ca and/or
+      a CRM webhook), set `DELIVERY_WIRED`, and set `NEXT_PUBLIC_CONTACT_DELIVERY=ready` to remove the notice. Full steps are in that file's header.
+- [ ] Booking link still points to `/contact` (no Calendly yet); social handles unclaimed, so no social links render.
+- [x] Palette revised to restrained neutrals (see `DESIGN-SYSTEM.md`); the earlier reef/coral palette is retired.
+- [ ] `lenis` added as the one new runtime dependency (Gladstone's smooth-scroll library) — remove `SmoothScroll` in `layout.tsx` to drop it.
+- [ ] Portfolio copy is short (the source pages are brief). Add real results/quotes per project only when supplied; none were invented.
+- [ ] Two source videos are unavailable (Furze World Wonders, Marilyn Denis Show); several posters are low-resolution (Indspire, CBC The Hour).
+- [ ] Confirm Laura's About-page bio wording now that the Artform-era projects are shown as Parlour work (`CLAIMS-REGISTER.md`).
+- [ ] Hospitality has no case study (Muskoka Bay Club and Cabin are filed under Real Estate, matching their source categories).

@@ -9,6 +9,8 @@ export interface Insight {
   title: string;
   description: string;
   publishedAt: string;
+  /** Paragraphs of body copy. Only approved, supplied articles belong here. */
+  body: string[];
   relatedCaseStudySlug?: string;
   relatedServiceHref?: string;
 }

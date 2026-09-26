@@ -1,3 +1,6 @@
+import { portfolioProjects } from "./portfolio-data";
+import type { PortfolioProject } from "./portfolio-types";
+
 /**
  * Case-study data. Every claim here is sourced in CLAIMS-REGISTER.md — do
  * not add a metric, testimonial, or number without logging it there first.
@@ -5,24 +8,47 @@
  * never fill one in with a plausible-sounding guess.
  */
 
-export type Bucket =
-  | "development-real-estate"
-  | "hospitality"
+/**
+ * Work taxonomy — derived from the actual portfolio (37 published projects), restrained, multi-label.
+ * A project lists 1–3 categories (first = primary). Categories with no published project are hidden automatically.
+ */
+export type Category =
+  | "real-estate"
+  | "spaces-design-build"
+  | "broadcast-media"
+  | "sports"
+  | "events-experiences"
+  | "food-beverage"
+  | "fashion-retail"
+  | "editorial-publishing"
   | "founders"
-  | "construction-b2b"
-  | "heritage";
+  | "hospitality"
+  | "construction-b2b";
 
-export const bucketLabels: Record<Bucket, string> = {
-  "development-real-estate": "Development & Real Estate",
-  hospitality: "Hospitality",
+/** Order = chip order on /work. */
+export const categoryLabels: Record<Category, string> = {
+  "real-estate": "Real Estate",
+  "spaces-design-build": "Spaces & Design-Build",
+  "broadcast-media": "Broadcast & Media",
+  sports: "Sports",
+  "events-experiences": "Events & Experiences",
+  "food-beverage": "Food & Beverage",
+  "fashion-retail": "Fashion & Retail",
+  "editorial-publishing": "Editorial & Publishing",
   founders: "Founders & Personal Brands",
+  hospitality: "Hospitality",
   "construction-b2b": "Construction & B2B",
-  heritage: "Heritage — Laura at Artform",
 };
+
+/** Markets the source documents. Current commercial focus is Belize and the Americas; the rest of the portfolio is international experience. */
+export type Market = "Belize" | "Canada";
 
 export interface CaseStudyImage {
   src: string;
   alt: string;
+  /** Intrinsic size — when present, media renders at its natural aspect ratio instead of a fixed crop. */
+  w?: number;
+  h?: number;
 }
 
 export interface Metric {
@@ -30,16 +56,39 @@ export interface Metric {
   value: string | null;
 }
 
-export interface HeritageGroup {
-  subBucket: string;
-  clients: string;
-  work: string;
-}
+/** One block in a project's media stack (Gladstone-style long image sequence). */
+export type MediaBlock =
+  | { kind: "full"; image: CaseStudyImage; caption?: string }
+  | { kind: "grid"; images: CaseStudyImage[]; aspect?: "portrait" | "landscape" | "natural" };
 
 export interface CaseStudy {
   slug: string;
-  bucket: Bucket;
-  attribution: "parlour" | "laura-artform";
+  /** One-line descriptor shown beside the title on the project page and in the index. */
+  tagline: string;
+  /** Uppercase discipline labels (display metadata, mono slash list). */
+  disciplines: string[];
+  /** Image used in the index hover, thumbnail grid and social cards. null → typographic placeholder tile. */
+  cover: CaseStudyImage | null;
+  /** Extra narrative paragraphs shown under the headline in the editorial record. */
+  story?: string[];
+  /** Named partners / clients / collaborators. */
+  credits?: { role: string; name: string }[];
+  /** Embedded film (click-to-play facade with a local poster; nothing third-party loads until played). */
+  video?: { provider: "youtube" | "vimeo"; id: string; title: string; poster: CaseStudyImage };
+  /** Curated position in the Work index (lower = earlier). Not chronological. */
+  order: number;
+  /** Shown in the homepage index. */
+  home?: boolean;
+  /** Muted looping hero video (own footage). Poster is required. */
+  heroVideo?: { src: string; poster: string };
+  /** Full-width media sequence under the intro. Empty → "media pending" slot is rendered. */
+  sequence: MediaBlock[];
+  /** 1–3 categories, first is primary. */
+  categories: Category[];
+  /** Short place label for the index. */
+  place: string | null;
+  /** Documented commercial market, if any. */
+  market: Market | null;
   published: boolean;
   featured: boolean;
   client: string;
@@ -61,14 +110,70 @@ export interface CaseStudy {
   sourceNote: string | null;
   heroImage: CaseStudyImage | null;
   gallery: CaseStudyImage[];
-  heritageGroups?: HeritageGroup[];
 }
 
 export const caseStudies: CaseStudy[] = [
   {
     slug: "blue-ocean-belize",
-    bucket: "development-real-estate",
-    attribution: "parlour",
+    order: 1,
+    home: true,
+    tagline: "Five coastal developments, one marketing system.",
+    disciplines: ["Positioning", "Development brands", "Photography", "Film production", "Drone", "Paid media", "Web", "CRM", "Sales enablement"],
+    cover: {
+      src: "/work/blue-ocean-belize/aerial-009-2000w.webp",
+      alt: "Aerial view of the San Pedro coastline on Ambergris Caye, Belize, with the reef and open sea beyond",
+    },
+    heroVideo: {
+      src: "/work/blue-ocean-belize/hero-loop.mp4",
+      poster: "/work/blue-ocean-belize/hero-poster-2200w.webp",
+    },
+    sequence: [
+      {
+        kind: "grid",
+        aspect: "portrait",
+        images: [
+          { src: "/work/blue-ocean-belize/photo-002.webp", alt: "A couple walking away along a palm-lined path towards the sea" },
+          { src: "/work/blue-ocean-belize/photo-004.webp", alt: "A woman relaxing in a black hammock on white sand beside a turquoise-roofed cottage" },
+        ],
+      },
+      {
+        kind: "full",
+        image: {
+          src: "/work/blue-ocean-belize/aerial-006-2000w.webp",
+          alt: "Aerial view of a lagoon and the island shoreline under a broken sky",
+        },
+        caption: "Drone photography",
+      },
+      {
+        kind: "grid",
+        aspect: "portrait",
+        images: [
+          { src: "/work/blue-ocean-belize/photo-044.webp", alt: "A couple walking hand in hand down a street strung with bunting" },
+          { src: "/work/blue-ocean-belize/photo-052.webp", alt: "A couple seated together on the bow of a boat over turquoise water" },
+          { src: "/work/blue-ocean-belize/photo-074.webp", alt: "A couple sitting on the sand looking out to a boat on turquoise water" },
+        ],
+      },
+      {
+        kind: "grid",
+        aspect: "portrait",
+        images: [
+          { src: "/work/blue-ocean-belize/photo-078.webp", alt: "A couple walking hand in hand along a white-sand shoreline" },
+          { src: "/work/blue-ocean-belize/photo-080.webp", alt: "A couple on a tree swing at the edge of a turquoise lagoon" },
+          { src: "/work/blue-ocean-belize/photo-083.webp", alt: "A couple floating in clear shallow water, smiling at each other" },
+        ],
+      },
+      {
+        kind: "grid",
+        aspect: "portrait",
+        images: [
+          { src: "/work/blue-ocean-belize/photo-070.webp", alt: "A couple sharing a toast on the bow of a boat" },
+          { src: "/work/blue-ocean-belize/photo-072.webp", alt: "Turquoise shallows and a low green island under a wide blue sky" },
+        ],
+      },
+    ],
+    categories: ["real-estate"],
+    place: "Belize",
+    market: "Belize",
     published: true,
     featured: true,
     client: "Blue Ocean Belize",
@@ -114,12 +219,50 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "caves-branch-river-estates",
-    bucket: "development-real-estate",
-    attribution: "parlour",
+    order: 2,
+    home: true,
+    tagline: "Own your place in the wild heart of Belize.",
+    disciplines: ["Positioning", "Brand story", "Web", "Content", "Google and Meta campaigns", "Lead capture"],
+    cover: {
+      src: "/work/caves-branch-river-estates/hero-estate-1280w.webp",
+      alt: "Aerial view of Caves Branch River Estates, Cayo District, Belize",
+    },
+    sequence: [
+      {
+        kind: "full",
+        image: {
+          src: "/work/caves-branch-river-estates/hero-estate-1920w.webp",
+          alt: "Aerial view of Caves Branch River Estates, jungle lots bordering the Caves Branch River",
+        },
+      },
+      {
+        kind: "grid",
+        aspect: "landscape",
+        images: [
+          { src: "/work/caves-branch-river-estates/place-river-700w.webp", alt: "Aerial view of the Caves Branch River winding through jungle canopy" },
+          { src: "/work/caves-branch-river-estates/place-cave-700w.webp", alt: "Aerial view of a karst cave feature on the property" },
+        ],
+      },
+      {
+        kind: "full",
+        image: {
+          src: "/work/caves-branch-river-estates/river-band-1440w.webp",
+          alt: "Wide aerial view of the Caves Branch River",
+        },
+      },
+      {
+        kind: "grid",
+        aspect: "landscape",
+        images: [{ src: "/work/caves-branch-river-estates/place-ridge-860w.webp", alt: "Aerial view of jungle ridge at Caves Branch River Estates" }],
+      },
+    ],
+    categories: ["real-estate"],
+    place: "Belize",
+    market: "Belize",
     published: true,
     featured: false,
     client: "Caves Branch River Estates",
-    location: "Franks Eddy Village, Cayo District — 12–15 minutes from Belmopan",
+    location: "Franks Eddy Village, Cayo District, Belize (12–15 minutes from Belmopan)",
     sector: "Real estate development",
     since: null,
     services: [
@@ -175,8 +318,15 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "offi-belize",
-    bucket: "development-real-estate",
-    attribution: "parlour",
+    order: 3,
+    home: true,
+    tagline: "Positioning a national real estate marketplace.",
+    disciplines: ["Positioning", "Web and platform", "Brokerage model", "Outreach", "Sales materials"],
+    cover: null,
+    sequence: [],
+    categories: ["real-estate"],
+    place: "Belize",
+    market: "Belize",
     published: true,
     featured: false,
     client: "Offi Belize",
@@ -209,9 +359,15 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "stelcor-solutions",
-    bucket: "construction-b2b",
-    attribution: "parlour",
-    published: false,
+    order: 11,
+    tagline: "Marketing a technical building platform to the development industry.",
+    disciplines: ["Positioning", "ICF marketing", "Outreach", "Sales materials"],
+    cover: null,
+    sequence: [],
+    categories: ["construction-b2b"],
+    place: "Belize",
+    market: "Belize",
+    published: true,
     featured: false,
     client: "STELCOR Solutions",
     location: "Belize",
@@ -241,8 +397,14 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "stephen-mater",
-    bucket: "founders",
-    attribution: "parlour",
+    order: 10,
+    tagline: "A documentary system for a founder and endurance athlete.",
+    disciplines: ["Story development", "Documentary", "Editing", "Sound and colour", "Archive"],
+    cover: null,
+    sequence: [],
+    categories: ["founders"],
+    place: "Belize",
+    market: "Belize",
     published: true,
     featured: false,
     client: "Stephen Mater",
@@ -280,76 +442,102 @@ export const caseStudies: CaseStudy[] = [
     heroImage: null,
     gallery: [],
   },
-  {
-    slug: "laura-artform",
-    bucket: "heritage",
-    attribution: "laura-artform",
-    published: true,
-    featured: false,
-    client: "Laura Curridor — Artform",
-    location: "Toronto, Canada",
-    sector: "Broadcast design, real estate branding, food & beverage, hospitality",
-    since: null,
-    services: ["Broadcast design and sets", "Real estate branding and sales environments", "Branding and communications"],
-    headline: "Laura's work at Artform",
-    challenge:
-      "Eight years at Artform, the Toronto design and communications firm, where Laura rose to Director of Marketing — the design-build and brand thinking Parlour brings to Belize.",
-    approach: {
-      position: "This is historical work completed at Artform, not by Parlour — shown here as the experience behind Parlour's current methodology.",
-      express: "",
-      perform: "",
-      enableSales: "",
-    },
-    whatChanged: [],
-    metrics: [],
-    testimonial: null,
-    sourceNote: "Source: artform.com. Approved by Laura for use on the Parlour website and social media.",
-    heroImage: null,
-    gallery: [],
-    heritageGroups: [
-      {
-        subBucket: "Real estate and development",
-        clients: "Forgestone Capital, Avenue & Park, The HUB at 30 Bay, Freed Developments",
-        work: "Real estate branding and sales environments",
-      },
-      {
-        subBucket: "Broadcast and media",
-        clients:
-          "CBC News, Rogers Sportsnet, Rogers Sports & Media, TVO: The Agenda, Blue Jays / Budweiser, Furze World Wonders",
-        work: "Broadcast design and sets, media environments, broadcast advertising",
-      },
-      {
-        subBucket: "Food and beverage",
-        clients: "LCBO, Aquamiel Tequila, Alida Tequila",
-        work: "Branding and communications",
-      },
-      {
-        subBucket: "Hospitality and experiences",
-        clients: "Karl Lagerfeld hotel partnership and Toronto Fashion Week, Muskoka Bay Club, DSquared² × Fashion Television",
-        work: "Marketing and build for a Toronto hotel tied to Fashion Week; resort and event work",
-      },
-    ],
-  },
 ];
 
+const noApproach = { position: "", express: "", perform: "", enableSales: "" };
+
+function fromPortfolio(p: PortfolioProject): CaseStudy {
+  return {
+    slug: p.slug,
+    order: p.order,
+    home: p.home,
+    tagline: p.tagline,
+    disciplines: p.disciplines,
+    cover: p.banner,
+    sequence: p.sequence,
+    categories: p.categories as Category[],
+    place: p.place,
+    market: p.market,
+    published: true,
+    featured: false,
+    client: p.client,
+    location: p.location,
+    sector: p.sector,
+    since: p.since,
+    services: p.disciplines,
+    headline: p.tagline,
+    challenge: p.lead,
+    approach: noApproach,
+    story: p.story,
+    whatChanged: p.changed,
+    credits: p.credits,
+    video: p.video,
+    metrics: [],
+    testimonial: null,
+    sourceNote: null,
+    heroImage: null,
+    gallery: [],
+  };
+}
+
+const allCaseStudies: CaseStudy[] = [...caseStudies, ...portfolioProjects.map(fromPortfolio)].sort((a, b) => a.order - b.order);
+
 export function getPublishedCaseStudies(): CaseStudy[] {
-  return caseStudies.filter((c) => c.published);
+  return allCaseStudies.filter((c) => c.published);
+}
+
+/** The curated homepage index. */
+export function getHomeCaseStudies(): CaseStudy[] {
+  return getPublishedCaseStudies().filter((c) => c.home);
+}
+
+export function getCaseStudiesByLocation(term: string): CaseStudy[] {
+  return getPublishedCaseStudies().filter((c) => c.location?.includes(term));
 }
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {
-  return caseStudies.find((c) => c.slug === slug && c.published);
+  return allCaseStudies.find((c) => c.slug === slug && c.published);
 }
 
 export function getFeaturedCaseStudy(): CaseStudy | undefined {
-  return caseStudies.find((c) => c.featured && c.published);
+  return allCaseStudies.find((c) => c.featured && c.published);
 }
 
-export function getCaseStudiesByBucket(bucket: Bucket): CaseStudy[] {
-  return getPublishedCaseStudies().filter((c) => c.bucket === bucket);
+export function getCaseStudiesByCategory(category: Category): CaseStudy[] {
+  return getPublishedCaseStudies().filter((c) => c.categories.includes(category));
 }
 
-/** Buckets that currently have zero published case studies — hide their Work filter. */
-export function getActiveBuckets(): Bucket[] {
-  const active = new Set(getPublishedCaseStudies().map((c) => c.bucket));
-  return (Object.keys(bucketLabels) as Bucket[]).filter((b) => active.has(b));
+/** Categories that have at least one published project, in chip order. */
+export function getActiveCategories(): Category[] {
+  const active = new Set(getPublishedCaseStudies().flatMap((c) => c.categories));
+  return (Object.keys(categoryLabels) as Category[]).filter((k) => active.has(k));
+}
+
+/** Markets present in the published portfolio, Belize first. */
+export function getActiveMarkets(): Market[] {
+  const active = new Set(getPublishedCaseStudies().map((c) => c.market).filter(Boolean));
+  return (["Belize", "Canada"] as Market[]).filter((m) => active.has(m));
+}
+
+/** Index / hover metadata line: "Location · Sector". */
+export function projectLine(c: CaseStudy): string {
+  return [c.place ?? c.location, c.sector].filter(Boolean).join(" · ");
+}
+
+export function getAdjacentCaseStudies(slug: string): { prev: CaseStudy; next: CaseStudy } | null {
+  const list = getPublishedCaseStudies();
+  const i = list.findIndex((c) => c.slug === slug);
+  if (i === -1 || list.length < 2) return null;
+  return { prev: list[(i - 1 + list.length) % list.length]!, next: list[(i + 1) % list.length]! };
+}
+
+/** Portfolio facts for editorial proof lines. Always derived from published data — never hard-coded. */
+export function getPortfolioStats() {
+  const all = getPublishedCaseStudies();
+  return {
+    total: all.length,
+    industries: getActiveCategories().length,
+    belize: all.filter((p) => p.market === "Belize").length,
+    canada: all.filter((p) => p.market === "Canada").length,
+  };
 }

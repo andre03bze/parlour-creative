@@ -44,7 +44,7 @@ web search, or AI-generated answers are never a source for a Parlour fact.
 
 | Claim | Status | Source |
 |---|---|---|
-| Laura Curridor — 8 years at Artform, Toronto, rose to Director of Marketing | VERIFIED | Playbook (repeated 3×), checked ☒ |
+| Laura Curridor — 8 years in Toronto, rose to Director of Marketing (the Artform-era work is Parlour's portfolio; see amendment below) | VERIFIED (credential) / wording NEEDS_VERIFICATION | Playbook; Andre 2026-09-25 |
 | Laura's public title: "Founder, CEO & Chief Strategy Officer" | VERIFIED | Playbook — explicitly resolved (☒) over the alternate "Founder & Marketing Director" |
 | Laura embedded senior marketing roles across Belize incl. Blue Ocean Belize, Offi Belize, STELCOR Solutions | PROVIDED | Playbook, About copy |
 | Andre Acosta — Creative & Strategy Director | PROVIDED | Playbook, throughout |
@@ -55,31 +55,23 @@ web search, or AI-generated answers are never a source for a Parlour fact.
 | Phone/WhatsApp: +501 600 8548 | PROVIDED | Playbook, email/WhatsApp scripts |
 | Headshots (Laura, Andre) | UNKNOWN (not received) | Playbook open item: "Headshots for Laura and Andre (next week)" |
 
-## Artform heritage (Laura's prior work — historical, NOT Parlour work)
+## Portfolio migrated from artform.com (Parlour work)
 
-All entries below are ☒ confirmed in the playbook as "approved by Laura for the website
-and social" — i.e. cleared to publish, clearly attributed to Artform/Laura, never to
-Parlour.
+**Amended 2026-09-25 (source: Andre — owner instruction).** Parlour existed during the period these projects cover; artform.com was
+the domain used at the time. The 33 projects on that site are **Parlour case studies** (Laura owns the site and authorised reuse of all its
+content, imagery and video). This **supersedes** the earlier "Artform heritage — historical, not Parlour" classification. Per-project facts are
+recorded in `ARTFORM-PROJECT-INVENTORY.md`; only what the source states is published (no invented metrics or outcomes). Factual third-party
+credits (Oxford Properties, Stafford Developments, Roswell Construction, hosts, partners) are kept on the project pages.
 
 | Claim | Status | Source |
 |---|---|---|
-| CBC News — federal election coverage (broadcast design) | VERIFIED | Playbook |
-| Rogers Sportsnet, Rogers Sports & Media (broadcast design) | VERIFIED | Playbook |
-| TVO / The Agenda (broadcast design) | VERIFIED | Playbook |
-| Blue Jays / Budweiser (broadcast design) | VERIFIED | Playbook |
-| Furze World Wonders | VERIFIED | Playbook |
-| LCBO (brand/communications) | VERIFIED | Playbook |
-| Aquamiel Tequila, Alida Tequila (branding/communications) | VERIFIED | Playbook |
-| Forgestone Capital (real estate branding/sales environments) | VERIFIED | Playbook |
-| Avenue & Park (real estate branding/sales environments) | VERIFIED | Playbook |
-| The HUB at 30 Bay (real estate branding/sales environments) | VERIFIED | Playbook |
-| Freed Developments | VERIFIED | Playbook |
-| Karl Lagerfeld hotel partnership + Toronto Fashion Week | VERIFIED — explicitly ☒ confirmed | Playbook (confirmed twice) |
-| Muskoka Bay Club | VERIFIED | Playbook |
-| DSquared² × Fashion Television | VERIFIED | Playbook |
-| "Number one in Canada" claim | **DO NOT PUBLISH** | Playbook lists this among items to confirm (☒ box checked = *the confirmation task itself* was done, but the checked item is "confirm the claim + its source" — the claim's actual wording/source is not in the supplied material). Treat as NEEDS_VERIFICATION and omit until Laura supplies exact wording + source. |
-| Laura's exact role/credit on each named project individually | NEEDS_VERIFICATION | Not broken out per-project in source material — publish at the credential level ("Laura, Artform") not with invented per-project role claims |
-| Artform project imagery/video (actual media files) | UNKNOWN | Not supplied. Brief asks to research artform.com directly — see ASSET-INVENTORY.md for the policy on this |
+| The 33 listed projects are Parlour work and may be shown as Parlour case studies | PROVIDED | Andre, 2026-09-25 |
+| Reuse of artform.com imagery/video/copy on the Parlour site | PROVIDED (Laura, site owner) | Andre, 2026-09-25 |
+| LCBO campaigns: "memorable… sales were brisk" | PROVIDED | artform.com/projects/lcbo |
+| Kingwest Magazine self-sustaining in year one; ran five years | PROVIDED | artform.com/projects/kingwest-magazine |
+| CBC The Hour: Gemini Award (Best Production Design / Art Direction in Non-Fiction Program); eight seasons | PROVIDED | artform.com/projects/cbc-the-hour |
+| "Number one in Canada" claim | **DO NOT PUBLISH** | wording/source never supplied |
+| Laura's bio wording (eight years in Toronto, Director of Marketing) | NEEDS_VERIFICATION | About copy no longer names a separate firm; confirm final wording with Laura/Andre |
 
 ## Blue Ocean Belize (flagship current case study)
 
@@ -129,7 +121,7 @@ Parlour.
 |---|---|---|
 | ICF (construction/building-solutions) technical product | PROVIDED | Playbook |
 | Engagement: corporate/product positioning, ICF marketing, builder/developer outreach, sales materials, international-expansion planning | PROVIDED | Playbook |
-| Status | **"Needs sign-off"** per playbook's own case-study bucket table — do not publish as a full case study yet; safe to mention only in the "what Parlour does" service context, not as a named client case study, until sign-off is confirmed |
+| Status | **APPROVED FOR PUBLICATION** — Andre, 2026-09-25 (supersedes the playbook's "needs sign-off"). Published as a normal case study at `/work/stelcor-solutions`; only the documented engagement above is stated |
 | Partnerships/projects won | **NOT AVAILABLE** | Playbook: "[Add: ... if shareable]" |
 
 ## Stephen Mater / (im)possible pursuit (Founder Story)

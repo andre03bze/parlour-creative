@@ -6,13 +6,22 @@
 
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://parlourcreative.ca";
 
+/** Menu overlay (Gladstone-style single menu). Insights joins once a real article exists. */
 export const primaryNav = [
   { label: "Work", href: "/work" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Site to Sales", href: "/approach" },
+  { label: "Growth Diagnostic", href: "/growth-diagnostic", badge: "Start here" },
+  { label: "Contact", href: "/contact" },
+] as const;
+
+/** Secondary sector / region links shown small in the overlay and footer. */
+export const sectorNav = [
   { label: "Real Estate", href: "/real-estate" },
   { label: "Hospitality", href: "/hospitality" },
   { label: "Founders", href: "/founders" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  { label: "Belize", href: "/belize" },
 ] as const;
 
 export const footerNav = [
@@ -41,3 +50,6 @@ export const contact = {
 export const socialLinks: { label: string; href: string }[] = [];
 
 export const footerTagline = "Positioning / Story / Performance / Sales";
+
+/** Site → Sales framework, approved wording (used on the homepage and /approach). */
+export const siteToSales = ["Site", "Strategy", "Brand", "Story", "Experience", "Distribution", "Sales"] as const;

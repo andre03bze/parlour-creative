@@ -1,27 +1,42 @@
 @import "tailwindcss";
 
 @theme {
-  /* Color — see DESIGN-SYSTEM.md */
-  --color-paper: #f7f4ec;
-  --color-paper-dim: #efeae0;
-  --color-ink: #15160f;
-  --color-ink-soft: #4a4c3f;
-  --color-forest: #1e3a2b;
-  --color-forest-deep: #12241a;
-  --color-clay: #b15a34;
-  --color-line: #d9d2c0;
+  /* Colour — restrained, architectural neutrals (Gladstone-level restraint). Colour lives in the photography.
+     Parlour identity carried by the logo, the type and a single muted oxide accent. See DESIGN-SYSTEM.md */
+  --color-paper: #e4e2dc; /* warm stone */
+  --color-paper-dim: #d8d5cd;
+  --color-ink: #171614; /* warm black (logo is #231f20) */
+  --color-ink-soft: #57544d;
+  --color-coal: #161513; /* dark bands, menu, footer */
+  --color-coal-soft: #2a2825; /* hover on ink, raised dark */
+  --color-oxide: #8a4a38; /* the only accent — focus, errors, tiny details */
+  --color-clay: #8a4a38;
+  --color-clay-dark: #6f3a2b;
+  --color-line: #bdb9ae;
+
+  /* Semantic tokens added for the palette exploration. Defaults reproduce the current palette. */
+  --color-tint: #d8d5cd; /* coloured band surface (Growth Diagnostic, etc.) */
+  --color-accent: #161513; /* accent surface: marquee band */
+  --color-accent-ink: #e4e2dc; /* text on the accent surface */
+  --color-accent-text: #171614; /* accent italics + hovered project title, on paper/tint */
+  --color-accent-dark: #e4e2dc; /* accent italics on dark bands */
+  --color-mark: rgba(23, 22, 20, 0.12); /* marker highlight behind key words */
+  --color-cta: #171614; /* primary button */
+  --color-cta-hover: #2a2825;
+  --color-cta-ink: #e4e2dc;
 
   /* Type */
-  --font-display: var(--font-fraunces), Georgia, serif;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-
-  /* Breakpoints (default Tailwind sm/md/lg kept; custom names added) */
-  --breakpoint-xs: 23.4375rem; /* 375px */
-  --breakpoint-phone-lg: 26.875rem; /* 430px */
+  --font-display: var(--font-sans-brand), "Neue Haas Unica", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans: var(--font-sans-brand), "Neue Haas Unica", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-sans-brand), "Neue Haas Unica", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-serif: var(--font-serif), Georgia, serif;
 
   /* Motion */
   --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-link: cubic-bezier(0.28, 0, 0.18, 1); /* Gladstone link/hover easing */
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --breakpoint-xs: 23.4375rem;
 }
 
 @layer base {
@@ -32,27 +47,24 @@
   html {
     scroll-behavior: smooth;
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
+  /* Lenis */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
   }
 
   body {
     background-color: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-size: 1.0625rem;
+    font-size: 1rem;
+    font-weight: 400;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
@@ -61,8 +73,9 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    line-height: 1.05;
-    letter-spacing: -0.01em;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.04em;
   }
 
   a {
@@ -70,75 +83,367 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-forest);
+    outline: 2px solid var(--color-oxide);
     outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  /* Cross-document + same-document page transition (progressive enhancement). */
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root) {
+    animation: 320ms var(--ease-standard) both page-out;
+  }
+  ::view-transition-new(root) {
+    animation: 700ms var(--ease-editorial) both page-in;
+  }
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
   }
 }
 
 @layer utilities {
+  /* ---- Type scale (grotesque 500, tight tracking — the existing Parlour headline voice) ---- */
   .text-display {
-    font-size: clamp(2.75rem, 5vw + 1rem, 6rem);
-    font-weight: 480;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(3rem, 1.2rem + 7.4vw, 8.75rem);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
   }
-
+  .text-statement {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.75rem, 1rem + 2.7vw, 3.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+  }
   .text-h2 {
-    font-size: clamp(2rem, 2.5vw + 1rem, 3.25rem);
-    font-weight: 480;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.25rem, 1.1rem + 3.4vw, 4.75rem);
+    line-height: 0.96;
+    letter-spacing: -0.05em;
   }
-
   .text-h3 {
-    font-size: clamp(1.375rem, 1vw + 1rem, 1.75rem);
-    font-weight: 520;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.5rem, 1rem + 1.2vw, 2.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
   }
-
+  .text-index {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.5rem, 0.9rem + 6vw, 7rem);
+    line-height: 1;
+    letter-spacing: -0.055em;
+  }
+  .text-lead {
+    font-size: clamp(1.2rem, 1rem + 0.8vw, 1.6rem);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+  /* Accent: Newsreader italic, as used for captions on the existing site */
+  .accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--color-accent-text);
+  }
+  [data-dark] .accent,
+  [data-hero] .accent {
+    color: var(--color-accent-dark);
+  }
   .text-meta {
-    font-size: 0.8125rem;
-    letter-spacing: 0.08em;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+    line-height: 1.6;
     color: var(--color-ink-soft);
   }
 
   .container-page {
-    max-width: 90rem;
+    max-width: 120rem;
     margin-inline: auto;
     padding-inline: 1.25rem;
   }
-
   @media (min-width: 64rem) {
     .container-page {
-      padding-inline: 4rem;
+      padding-inline: 2.5rem;
     }
   }
 
   .prose-column {
-    max-width: 68ch;
+    max-width: 62ch;
   }
 
+  /* ---- Motion ---- */
+  /* fade-up, close to Gladstone's AOS default (opacity + upward travel, ease) */
   .reveal {
     opacity: 0;
-    transform: translateY(1.25rem);
+    transform: translateY(3.5rem);
     transition:
-      opacity 700ms var(--ease-editorial),
-      transform 700ms var(--ease-editorial);
+      opacity 700ms ease,
+      transform 700ms ease;
   }
-
   .reveal.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .reveal {
-      opacity: 1;
+  /* The wrapper clips the pre-reveal zoom so scaled images can never widen the page. */
+  .reveal-wrap {
+    overflow: clip;
+  }
+
+  /* Image reveal: a curtain wipes up, image settles from a slight zoom. */
+  .reveal-media {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1200ms var(--ease-editorial);
+  }
+  .reveal-media > * {
+    transform: scale(1.12);
+    transition: transform 1600ms var(--ease-editorial);
+  }
+  .is-visible > .reveal-media {
+    clip-path: inset(0 0 0 0);
+  }
+  .is-visible > .reveal-media > * {
+    transform: scale(1);
+  }
+
+  /* Filter change: results settle in (fade + short rise), like the page entrance */
+  .filter-in {
+    animation: filter-in 600ms var(--ease-editorial) both;
+  }
+  @keyframes filter-in {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem);
+    }
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee var(--marquee-duration, 60s) linear infinite;
+    will-change: transform;
+  }
+
+  /* Word-mask reveal (Gladstone "typing"): words rise from a clipped line, 1s ease, staggered per word */
+  .split-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+    margin-right: 0.24em;
+  }
+  .split-inner {
+    display: inline-block;
+    transform: translateY(120%);
+    transition: transform 1s ease;
+  }
+  .split.is-visible .split-inner {
+    transform: none;
+  }
+  .split-mark {
+    background: var(--color-mark);
+    padding-inline: 0.12em;
+    margin-left: -0.12em;
+    margin-right: 0.12em;
+  }
+
+  /* Big-logo rise on load */
+  .logo-rise {
+    display: block;
+    overflow: hidden;
+  }
+  .logo-rise > * {
+    transform: translateY(105%);
+    animation: logo-rise 1.4s var(--ease-editorial) 0.15s forwards;
+  }
+  @keyframes logo-rise {
+    to {
       transform: none;
-      transition: none;
+    }
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
     }
   }
 }
 
-/* No JS (or it failed to load): never leave content permanently hidden —
-   brief rule 30, "no critical content should depend on animation." */
-.no-js .reveal {
+/* Reduced motion / no JS: nothing may stay hidden and nothing loops. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  /* Blanket fallback: menu slide, hovers, link transitions and every animation collapse to instant. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal,
+  .reveal-media,
+  .reveal-media > *,
+  .split-inner,
+  .logo-rise > * {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    transition: none;
+    animation: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+.no-js .reveal,
+.no-js .reveal-media,
+.no-js .reveal-media > *,
+.no-js .split-inner,
+.no-js .logo-rise > * {
   opacity: 1;
   transform: none;
+  clip-path: none;
+}
+
+
+/* ==========================================================================
+   PALETTE EXPLORATION — temporary. `data-theme` on <html> switches the whole
+   site; no theme is chosen yet. See DESIGN-SYSTEM.md. Absent attribute = the
+   current warm-stone palette.
+   ========================================================================== */
+
+/* A — Warm Editorial: cream vellum, espresso, oxblood band, brass detail */
+:root[data-theme="a"] {
+  --color-paper: #f1eadf;
+  --color-paper-dim: #e5daca;
+  --color-tint: #e3d2be;
+  --color-ink: #1f1613;
+  --color-ink-soft: #5a4c44;
+  --color-coal: #1d1411;
+  --color-coal-soft: #33251f;
+  --color-oxide: #6f2621;
+  --color-clay: #6f2621;
+  --color-clay-dark: #55191a;
+  --color-line: #cdbfa9;
+  --color-accent: #5c1e1b;
+  --color-accent-ink: #f1eadf;
+  --color-accent-text: #6f2621;
+  --color-accent-dark: #c9a66b;
+  --color-mark: rgba(201, 166, 107, 0.38);
+  --color-cta: #1f1613;
+  --color-cta-hover: #5c1e1b;
+  --color-cta-ink: #f1eadf;
+}
+
+/* B — Parlour Green & Plaster: bottle-green ink, plaster-pink paper, blush surfaces */
+:root[data-theme="b"] {
+  --color-paper: #f3ebe5;
+  --color-paper-dim: #e8d9d0;
+  --color-tint: #ebc6bd;
+  --color-ink: #0e241a;
+  --color-ink-soft: #3f5246;
+  --color-coal: #0e241a;
+  --color-coal-soft: #1b3a2a;
+  --color-oxide: #1f6444;
+  --color-clay: #1f6444;
+  --color-clay-dark: #164a32;
+  --color-line: #d2bfb6;
+  --color-accent: #edb9af;
+  --color-accent-ink: #0e241a;
+  --color-accent-text: #1f6444;
+  --color-accent-dark: #f0b8ae;
+  --color-mark: rgba(237, 185, 175, 0.6);
+  --color-cta: #0e241a;
+  --color-cta-hover: #1f6444;
+  --color-cta-ink: #f3ebe5;
+}
+
+/* C — Cenote & Añil: limestone, indigo-black, annatto amber (pigments of the Americas) */
+:root[data-theme="c"] {
+  --color-paper: #eae7df;
+  --color-paper-dim: #dedad0;
+  --color-tint: #d6dbe6;
+  --color-ink: #0f1830;
+  --color-ink-soft: #4a5470;
+  --color-coal: #101a3a;
+  --color-coal-soft: #1e2b5a;
+  --color-oxide: #8a4e0a;
+  --color-clay: #8a4e0a;
+  --color-clay-dark: #6e3d06;
+  --color-line: #c3c3c4;
+  --color-accent: #e9a63a;
+  --color-accent-ink: #0f1830;
+  --color-accent-text: #8a4e0a;
+  --color-accent-dark: #f0b24f;
+  --color-mark: rgba(233, 166, 58, 0.4);
+  --color-cta: #0f1830;
+  --color-cta-hover: #1e2b5a;
+  --color-cta-ink: #eae7df;
+}
+
+/* Colour changes are quick and quiet while comparing. */
+html {
+  transition: background-color 400ms ease, color 400ms ease;
+}
+
+
+/* Shared-element morph between case studies (React <ViewTransition share="hero-morph">).
+   Falls back to no animation without View Transitions support; disabled for reduced motion; shorter on phones. */
+::view-transition-group(.hero-morph) {
+  animation-duration: 900ms;
+  animation-timing-function: cubic-bezier(0.28, 0, 0.18, 1);
+}
+::view-transition-old(.hero-morph),
+::view-transition-new(.hero-morph) {
+  animation-duration: 900ms;
+  animation-timing-function: cubic-bezier(0.28, 0, 0.18, 1);
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 767px) {
+  ::view-transition-group(.hero-morph),
+  ::view-transition-old(.hero-morph),
+  ::view-transition-new(.hero-morph) {
+    animation-duration: 550ms;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(.hero-morph),
+  ::view-transition-old(.hero-morph),
+  ::view-transition-new(.hero-morph) {
+    animation: none !important;
+  }
 }

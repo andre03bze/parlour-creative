@@ -10,7 +10,7 @@ re-deriving anything from the playbook.
 | `blue-ocean-belize` | Blue Ocean Belize | Development & Real Estate | Parlour | **Flagship — ready to publish** |
 | `caves-branch-river-estates` | Caves Branch River Estates | Development & Real Estate | Parlour | Ready to publish |
 | `offi-belize` | Offi Belize | Development & Real Estate | Parlour | Ready to publish |
-| `stelcor-solutions` | STELCOR Solutions | Construction & B2B | Parlour | **Needs sign-off — build data, gate the route until confirmed** |
+| `stelcor-solutions` | STELCOR Solutions | Construction & B2B | Parlour | **Published** (approved 2026-09-25); no imagery/metrics yet — labelled media slot |
 | `stephen-mater` | Stephen Mater — (im)possible pursuit | Founders & Personal Brands | Parlour | Ready to publish (narrative only, no metrics yet — started Sept 28, 2026) |
 | `laura-artform` | (multiple, see below) | Heritage | **Laura — Artform** (historical, not Parlour) | Ready to publish, text-first (no media files supplied) |
 
@@ -60,3 +60,16 @@ interface CaseStudy {
 Do not add speculative fields (drone footage counts, awards, etc.) beyond what a real
 project actually has data for — the brief's own rule 3 ("no half-finished
 implementations").
+
+
+---
+
+## Update 2026-09-25 — full portfolio
+
+The "Heritage / laura-artform" bucket and page are **retired**. The 33 projects from artform.com are regular Parlour case studies:
+see `ARTFORM-PROJECT-INVENTORY.md` for the per-project inventory. `/work/laura-artform` now 301-redirects to `/work`.
+Buckets: Real Estate · Broadcast & Media · Food & Beverage · Fashion & Retail · Founders (+ Hospitality / Construction & B2B, hidden until populated).
+
+**Taxonomy update:** the single "bucket" is replaced by multi-label categories (Real Estate, Spaces & Design-Build, Broadcast & Media, Sports,
+Events & Experiences, Food & Beverage, Fashion & Retail, Editorial & Publishing, Founders & Personal Brands) plus a documented-market field
+(Belize / Canada). Full mapping and market policy: `ARTFORM-PROJECT-INVENTORY.md`. Work filters are deep-linkable: `/work?category=…&market=…&view=list`.

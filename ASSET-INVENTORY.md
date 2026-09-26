@@ -105,3 +105,32 @@ above.
 No brand fonts or icon set were supplied. Design system (`DESIGN-SYSTEM.md`) specifies
 a placeholder type system using licensed Google Fonts (self-hosted, per the brief's
 performance rules) — swap for real brand fonts when Laura/Andre choose a type system.
+
+
+---
+
+## v2 — real assets now in the repo (all optimised, sourced from Andre's local project folders)
+
+| Path | Source | Notes |
+|---|---|---|
+| `public/brand/parlour-logo-{dark,light}.svg` | Existing Parlour site theme | Original files; `Logo.tsx` renders the same paths |
+| `public/work/blue-ocean-belize/hero-loop.mp4` (+ `hero-poster-2200w.webp`) | `/Volumes/T7/BOB/lb drone/DJI_20260725130930_0028_D.MP4` | 7s, 1600w, no audio, ~0.7 MB. Used for homepage + case-study hero |
+| `…/aerial-006-2000w.webp`, `aerial-009-2000w.webp` | `BOB/lb drone` frames | Drone stills |
+| `…/photo-002…083.webp` (10 files) | `/Volumes/T7/BOB AUG DELIVERABLES/PHOTOS/` | Lifestyle photography from the Blue Ocean deliverables |
+| `public/work/caves-branch-river-estates/*` | CBRE repo (unchanged) | Cover + sequence |
+
+Not in the repo (by design): frame-grab contact sheets and other inspection artifacts (kept in the session scratchpad only).
+Videos in `/Volumes/T7` were not copied wholesale — only the one optimised hero loop.
+
+**To confirm:** Blue Ocean's permission to publish the deliverables; releases for the couple photographed (brand
+ambassadors) and no identifiable third parties/brand close-ups were used (a vendor portrait and shop-branding shots were excluded).
+
+
+---
+
+## 2026-09-25 — portfolio assets (authorised by the site owner)
+231 images from artform.com were downloaded once to `/Volumes/T7/parlour-creative-sources/artform/` (outside the repo, read-only) and optimised to
+`public/work/<slug>/NN.webp` (max 2200 px, q78; ~46 MB for the whole `public/work`). Unused duplicates were not shipped. Seven film posters are stored
+locally (`video-poster.webp`); the films themselves stay on YouTube/Vimeo behind a click-to-play facade (no third-party load until played).
+To self-host films, supply the source files. Scripts: `parlour-creative-sources/artform/{scrape,optimise}.py`. No contact sheets, scrape caches or
+intermediate exports are in the repo.

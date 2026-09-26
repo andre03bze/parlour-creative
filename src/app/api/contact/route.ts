@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { deliverEnquiry, isDeliveryConfigured } from "@/lib/deliver-enquiry";
 
 export const runtime = "nodejs";
 
@@ -7,6 +8,7 @@ interface ContactPayload {
   company: string;
   email: string;
   phone?: string;
+  location?: string;
   companyType?: string;
   projectType?: string;
   budget?: string;
@@ -40,6 +42,7 @@ export async function POST(request: Request) {
     company: clean(raw.company, 200),
     email: clean(raw.email, 320),
     phone: clean(raw.phone, 80),
+    location: clean(raw.location, 200),
     companyType: clean(raw.companyType, 80),
     projectType: clean(raw.projectType, 80),
     budget: clean(raw.budget, 80),
@@ -55,18 +58,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
   }
 
-  // No email/CRM provider is configured yet (see .env.example, CONTENT-GAPS.md).
-  // Log server-side so nothing is silently dropped during development; wire a
-  // real provider (Resend, etc.) here once RESEND_API_KEY is set.
-  if (process.env.RESEND_API_KEY) {
-    // Intentionally left for the real integration — do not fabricate a
-    // delivery success before a provider is actually wired up.
+  // Never report success unless the enquiry was actually delivered (see src/lib/deliver-enquiry.ts).
+  if (!isDeliveryConfigured()) {
+    return NextResponse.json({ error: "delivery_not_configured" }, { status: 503 });
   }
 
-  console.log("[contact] new enquiry", {
-    ...payload,
-    receivedAt: new Date().toISOString(),
-  });
+  try {
+    await deliverEnquiry(payload);
+  } catch {
+    return NextResponse.json({ error: "delivery_failed" }, { status: 502 });
+  }
 
   return NextResponse.json({ ok: true });
 }

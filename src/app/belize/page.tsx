@@ -1,54 +1,51 @@
 import type { Metadata } from "next";
-import { Button, Section } from "@/components/ui";
-import { getCaseStudiesByBucket } from "@/content/case-studies";
+import { Block, CtaBand, PageHead, ProofGrid } from "@/components/editorial";
+import { getCaseStudiesByLocation } from "@/content/case-studies";
 
 export const metadata: Metadata = {
   title: "Parlour in Belize",
-  description: "Based in Belize, working across the Americas — real estate and hospitality marketing rooted in Belize's markets.",
+  description:
+    "Based in Belize and working across the Americas: real estate and hospitality marketing rooted in Belize's markets and built for international buyers and guests.",
+  alternates: { canonical: "/belize" },
 };
 
 export default function BelizePage() {
-  const projects = getCaseStudiesByBucket("development-real-estate");
+  const projects = getCaseStudiesByLocation("Belize");
 
   return (
     <>
-      <Section className="pb-12 pt-16 lg:pt-20">
-        <h1 className="text-display max-w-3xl">Built in Belize. Working across the Americas.</h1>
-        <p className="prose-column mt-6 text-lg text-ink-soft">
-          Belize is where we prove the work every day. From here we serve
-          developers and hospitality brands selling to North American and
-          international buyers, from Mexico and Central America to South
-          America.
-        </p>
-      </Section>
+      <PageHead
+        eyebrow="Belize · The Americas"
+        image={{
+          src: "/work/blue-ocean-belize/aerial-009-2000w.webp",
+          alt: "Aerial view of the San Pedro coastline on Ambergris Caye, Belize, with the reef beyond",
+          position: "center 70%",
+        }}
+        title={
+          <>
+            Built in Belize. Working <span className="accent">across the Americas.</span>
+          </>
+        }
+        lead="Belize is where we prove the work every day. From here we serve developers and hospitality brands selling to North American and international buyers, from Mexico and Central America to South America."
+      />
 
-      <Section className="bg-paper-dim">
-        <h2 className="text-h3">Where we work in Belize</h2>
-        <p className="mt-4 max-w-2xl text-ink-soft">
+      <Block label="Where we work in Belize">
+        <p className="text-lead prose-column">
           Ambergris Caye · Caye Caulker · Placencia · Hopkins · Cayo · Belize City
         </p>
-      </Section>
+      </Block>
 
       {projects.length > 0 && (
-        <Section>
-          <h2 className="text-h2 max-w-xl">Current work in Belize.</h2>
-          <div className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((p) => (
-              <a key={p.slug} href={`/work/${p.slug}`} className="group block border-t border-ink pt-4">
-                <p className="font-display text-lg group-hover:text-forest">{p.client}</p>
-                <p className="mt-1 text-sm text-ink-soft">{p.location}</p>
-              </a>
-            ))}
-          </div>
-        </Section>
+        <Block label="Current work in Belize">
+          <ProofGrid projects={projects} />
+        </Block>
       )}
 
-      <Section dark className="text-center">
-        <h2 className="text-h2 mx-auto max-w-xl">Bring your next place to market.</h2>
-        <div className="mt-8">
-          <Button href="/contact">Book a strategy call</Button>
-        </div>
-      </Section>
+      <CtaBand
+        title="Bring your next place to market."
+        primary={{ label: "Start a conversation", href: "/contact" }}
+        secondary={{ label: "View the work", href: "/work" }}
+      />
     </>
   );
 }

@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 export function Eyebrow({ children }: { children: ReactNode }) {
-  return <p className="text-meta text-forest">{children}</p>;
+  return <p className="text-meta">{children}</p>;
 }
 
 export function Button({
@@ -15,18 +15,24 @@ export function Button({
   children: ReactNode;
 }) {
   const base =
-    "inline-flex items-center justify-center px-6 py-3.5 text-sm font-medium tracking-wide transition-colors duration-200 ease-standard";
+    "group inline-flex items-center gap-3 border px-6 py-3.5 text-xs font-medium uppercase tracking-[0.14em] transition-colors duration-500 ease-editorial";
   const styles = {
-    primary: "bg-forest text-paper hover:bg-forest-deep",
-    secondary: "border border-ink text-ink hover:bg-ink hover:text-paper",
-    onDark: "border border-paper/40 text-paper hover:bg-paper hover:text-ink",
+    primary: "border-cta bg-cta text-cta-ink hover:bg-cta-hover hover:border-cta-hover",
+    secondary: "border-ink text-ink hover:bg-ink hover:text-paper",
+    onDark: "border-paper/50 text-paper hover:bg-paper hover:text-ink",
   } as const;
 
   return (
     <Link href={href} className={`${base} ${styles[variant]}`}>
       {children}
+      <span aria-hidden="true" className="inline-block transition-transform duration-500 ease-editorial group-hover:translate-x-1.5">→</span>
     </Link>
   );
+}
+
+/** Page top: clears the fixed header, carries the page's single H1. */
+export function PageIntro({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return <div className={`container-page pb-14 pt-32 lg:pb-20 lg:pt-44 ${className}`}>{children}</div>;
 }
 
 export function Section({
@@ -41,9 +47,7 @@ export function Section({
   as?: "section" | "div";
 }) {
   return (
-    <As
-      className={`py-20 lg:py-32 ${dark ? "bg-forest-deep text-paper" : ""} ${className}`}
-    >
+    <As data-dark={dark || undefined} className={`py-20 lg:py-32 ${dark ? "bg-coal text-paper" : ""} ${className}`}>
       <div className="container-page">{children}</div>
     </As>
   );
