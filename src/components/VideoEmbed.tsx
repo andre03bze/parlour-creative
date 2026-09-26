@@ -3,12 +3,14 @@
 import Image from "next/image";
 import { useState } from "react";
 import type { CaseStudy } from "@/content/case-studies";
+import { useT } from "@/i18n/client";
 
 /**
  * Click-to-play film. A local poster is shown; the third-party player (YouTube no-cookie / Vimeo with DNT)
  * only loads after the visitor presses play, so no tracking scripts or heavy iframes hit the page load.
  */
 export function VideoEmbed({ video }: { video: NonNullable<CaseStudy["video"]> }) {
+  const t = useT();
   const [playing, setPlaying] = useState(false);
   const src =
     video.provider === "youtube"
@@ -30,7 +32,7 @@ export function VideoEmbed({ video }: { video: NonNullable<CaseStudy["video"]> }
         <button
           type="button"
           onClick={() => setPlaying(true)}
-          aria-label={`Play film: ${video.title}`}
+          aria-label={`${t("Play film")}: ${video.title}`}
           className="group absolute inset-0 block w-full"
         >
           <Image
@@ -50,7 +52,7 @@ export function VideoEmbed({ video }: { video: NonNullable<CaseStudy["video"]> }
             </svg>
           </span>
           <span className="absolute bottom-4 left-5 text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-white">
-            Play film · {video.title}
+            {t("Play film")} · {video.title}
           </span>
         </button>
       )}

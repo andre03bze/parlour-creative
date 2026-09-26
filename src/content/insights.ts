@@ -13,6 +13,8 @@ export interface Insight {
   body: string[];
   relatedCaseStudySlug?: string;
   relatedServiceHref?: string;
+  /** Spanish version of the same article (same slug). Falls back to English when absent. */
+  es?: { title: string; description: string; body: string[] };
 }
 
 export const insights: Insight[] = [];

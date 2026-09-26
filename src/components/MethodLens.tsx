@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
+import Link, { useT } from "@/i18n/client";
 
 export interface LensStage {
   name: string;
@@ -18,6 +18,7 @@ export interface LensStage {
  * projects that evidence it (linking into the Work filter). Restrained: type, hairlines, one image.
  */
 export function MethodLens({ stages, total }: { stages: LensStage[]; total: number }) {
+  const t = useT();
   const [active, setActive] = useState(stages[0]!.name);
   const current = stages.find((s) => s.name === active)!;
   const shown = current.projects.slice(0, 7);
@@ -40,15 +41,15 @@ export function MethodLens({ stages, total }: { stages: LensStage[]; total: numb
                   style={{ opacity: on ? 1 : 0.35 }}
                 >
                   <span className="w-8 shrink-0 text-[0.6875rem] font-medium tracking-[0.14em] text-ink-soft">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="text-index !text-[clamp(2.25rem,1rem+4.2vw,5rem)] leading-none">{s.name}</span>
-                  <span className="ml-auto hidden text-right text-[0.6875rem] font-medium uppercase tracking-[0.12em] sm:block">{on ? s.note : ""}</span>
+                  <span className="text-index !text-[clamp(2.25rem,1rem+4.2vw,5rem)] leading-none">{t(s.name)}</span>
+                  <span className="ml-auto hidden text-right text-[0.6875rem] font-medium uppercase tracking-[0.12em] sm:block">{on ? t(s.note) : ""}</span>
                 </button>
               </li>
             );
           })}
         </ol>
         <p className="prose-column mt-6 text-sm text-ink-soft" aria-live="polite">
-          <span className="text-ink">{current.count} of {total} projects</span> evidence {current.name}:{" "}
+          <span className="text-ink">{t("{count} of {total} projects", { count: current.count, total })}</span> {t("evidence {stage}:", { stage: t(current.name) })}{" "}
           {shown.map((p, i) => (
             <span key={p.slug}>
               {i > 0 && ", "}
@@ -59,7 +60,7 @@ export function MethodLens({ stages, total }: { stages: LensStage[]; total: numb
             <>
               {" "}
               <Link href={`/work?stage=${current.name}`} className="whitespace-nowrap underline underline-offset-4 hover:text-accent-text">
-                and {current.projects.length - shown.length} more →
+                {t("and {n} more", { n: current.projects.length - shown.length })} →
               </Link>
             </>
           )}
@@ -86,7 +87,7 @@ export function MethodLens({ stages, total }: { stages: LensStage[]; total: numb
         {current.showcase && (
           <figcaption className="mt-3 flex items-baseline justify-between gap-4 text-[0.6875rem] font-medium uppercase tracking-[0.12em]">
             <span>
-              {current.name} · <Link href={`/work/${current.showcase.slug}`} className="underline underline-offset-4">{current.showcase.client}</Link>
+              {t(current.name)} · <Link href={`/work/${current.showcase.slug}`} className="underline underline-offset-4">{current.showcase.client}</Link>
             </span>
             <span className="text-ink-soft">{current.showcase.place ?? ""}</span>
           </figcaption>

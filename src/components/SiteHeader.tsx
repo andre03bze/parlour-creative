@@ -1,9 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/Logo";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import Link, { useT } from "@/i18n/client";
+import { stripLang } from "@/i18n/config";
 import { contact, primaryNav, sectorNav } from "@/lib/site";
 
 /**
@@ -17,7 +19,8 @@ export function SiteHeader() {
   const [overDark, setOverDark] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [atHero, setAtHero] = useState(false);
-  const pathname = usePathname();
+  const pathname = stripLang(usePathname());
+  const t = useT();
   const closeRef = useRef<HTMLButtonElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const isHome = pathname === "/";
@@ -58,12 +61,17 @@ export function SiteHeader() {
     window.__lenis?.stop();
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    closeRef.current?.focus();
+    // Keep keyboard and screen-reader focus inside the panel: the page behind is inert while it is open.
+    const behind = ["main", "footer"].map((s) => document.querySelector<HTMLElement>(s));
+    behind.forEach((el) => el && (el.inert = true));
+    const first = closeRef.current && closeRef.current.offsetParent ? closeRef.current : document.querySelector<HTMLElement>("#site-menu nav a");
+    first?.focus();
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
     const toggle = toggleRef.current;
     return () => {
       window.__lenis?.start();
+      behind.forEach((el) => el && (el.inert = false));
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
       toggle?.focus();
@@ -83,7 +91,7 @@ export function SiteHeader() {
         <div className="container-page flex h-20 items-center justify-between">
           <Link
             href="/"
-            aria-label="Parlour Creative — home"
+            aria-label={t("Parlour Creative — home")}
             aria-hidden={hideLogo || undefined}
             tabIndex={hideLogo ? -1 : undefined}
             className="block transition-opacity duration-300"
@@ -91,15 +99,17 @@ export function SiteHeader() {
           >
             <Logo className="h-7 w-auto lg:h-9" title="Parlour Creative" />
           </Link>
+          <div className="flex items-center gap-4 sm:gap-6">
+          <LanguageSwitcher />
           <button
             ref={toggleRef}
             type="button"
-            className="group flex h-11 items-center gap-3 pl-4 text-[0.6875rem] font-medium uppercase tracking-[0.14em]"
+            className="group flex h-11 items-center gap-3 pl-1 text-[0.6875rem] font-medium uppercase tracking-[0.14em]"
             aria-expanded={open}
             aria-controls="site-menu"
             onClick={() => setOpen((v) => !v)}
           >
-            <span>{open ? "Close" : "Menu"}</span>
+            <span>{open ? t("Close") : t("Menu")}</span>
             <span aria-hidden="true" className="relative block h-3 w-7">
               <span
                 className={`absolute left-0 block h-px w-full bg-current transition-all duration-500 ease-link ${open ? "top-1/2 rotate-45" : "top-0 group-hover:translate-x-1"}`}
@@ -109,6 +119,7 @@ export function SiteHeader() {
               />
             </span>
           </button>
+          </div>
         </div>
       </header>
 
@@ -116,7 +127,7 @@ export function SiteHeader() {
         id="site-menu"
         role="dialog"
         aria-modal="true"
-        aria-label="Site menu"
+        aria-label={t("Site menu")}
         aria-hidden={!open}
         inert={!open}
         className="fixed inset-0 z-[60]"
@@ -126,7 +137,7 @@ export function SiteHeader() {
         <button
           ref={closeRef}
           type="button"
-          aria-label="Close menu"
+          aria-label={t("Close menu")}
           onClick={() => setOpen(false)}
           className="absolute inset-y-0 left-0 hidden w-[38vw] items-center justify-center lg:flex"
           style={{ cursor: "pointer" }}
@@ -140,7 +151,7 @@ export function SiteHeader() {
           {/* circular arrow: closes the menu (Gladstone) */}
           <button
             type="button"
-            aria-label="Close menu"
+            aria-label={t("Close menu")}
             tabIndex={-1}
             onClick={() => setOpen(false)}
             className="absolute left-[5vw] top-1/2 hidden h-16 w-16 -translate-y-1/2 items-center justify-center rounded-full border border-paper/80 text-paper transition-colors duration-500 ease-link hover:bg-paper hover:text-ink lg:flex"
@@ -149,12 +160,13 @@ export function SiteHeader() {
               <path d="M0 7h26M20 1l6 6-6 6" />
             </svg>
           </button>
-          <nav aria-label="Primary" className="mt-28 px-5 lg:mt-36 lg:pl-[12vw] lg:pr-10">
+          <nav aria-label={t("Primary")} className="mt-28 px-5 lg:mt-36 lg:pl-[12vw] lg:pr-10">
             <ul>
               {primaryNav.map((item, i) => (
                 <li key={item.href} className="overflow-hidden">
                   <Link
                     href={item.href}
+                    aria-current={pathname === item.href ? "page" : undefined}
                     onClick={() => setOpen(false)}
                     className="group flex items-baseline gap-3 py-1.5 font-light transition-opacity duration-500 ease-link hover:opacity-60"
                     style={{
@@ -162,9 +174,9 @@ export function SiteHeader() {
                       transition: `transform 900ms cubic-bezier(0.28,0,0.18,1) ${open ? 250 + i * 55 : 0}ms, opacity 500ms cubic-bezier(0.28,0,0.18,1)`,
                     }}
                   >
-                    <span className="text-[clamp(2rem,1.2rem+2.2vw,3.5rem)] leading-[1.15] tracking-[-0.03em]">{item.label}</span>
+                    <span className="text-[clamp(2rem,1.2rem+2.2vw,3.5rem)] leading-[1.15] tracking-[-0.03em]">{t(item.label)}</span>
                     {"badge" in item && (
-                      <span className="text-[0.625rem] font-medium uppercase tracking-[0.14em] text-paper/75">{item.badge}</span>
+                      <span className="text-[0.625rem] font-medium uppercase tracking-[0.14em] text-paper/75">{t(item.badge)}</span>
                     )}
                   </Link>
                 </li>
@@ -177,16 +189,16 @@ export function SiteHeader() {
             style={{ opacity: open ? 1 : 0, transition: `opacity 700ms ease ${open ? 700 : 0}ms` }}
           >
             <div>
-              <p className="text-[0.625rem] font-medium uppercase tracking-[0.14em] text-paper/70">Belize · The Americas</p>
+              <p className="text-[0.625rem] font-medium uppercase tracking-[0.14em] text-paper/70">{t("Belize · The Americas")}</p>
               <a href={`mailto:${contact.email}`} className="mt-3 block hover:underline">{contact.email}</a>
               <a href={contact.whatsappHref} className="block hover:underline">{contact.whatsapp} · WhatsApp</a>
             </div>
             <div>
-              <p className="text-[0.625rem] font-medium uppercase tracking-[0.14em] text-paper/70">Sectors</p>
+              <p className="text-[0.625rem] font-medium uppercase tracking-[0.14em] text-paper/70">{t("Sectors")}</p>
               <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
                 {sectorNav.map((s) => (
                   <li key={s.href}>
-                    <Link href={s.href} onClick={() => setOpen(false)} className="hover:underline">{s.label}</Link>
+                    <Link href={s.href} onClick={() => setOpen(false)} className="hover:underline">{t(s.label)}</Link>
                   </li>
                 ))}
               </ul>

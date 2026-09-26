@@ -43,7 +43,7 @@ export const stageOverrides: Record<string, { add?: Stage[]; remove?: Stage[] }>
 };
 
 export function stagesFor(p: CaseStudy): Stage[] {
-  const ds = p.disciplines.map((d) => d.toLowerCase());
+  const ds = (p.disciplinesEn ?? p.disciplines).map((d) => d.toLowerCase());
   const hit = (s: Stage) =>
     ds.some((d) => !stageExclude[s]?.some((x) => d.includes(x)) && stageKeywords[s].some((k) => d.includes(k)));
   const o = stageOverrides[p.slug];

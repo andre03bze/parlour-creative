@@ -1,11 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/i18n/client";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui";
 import { ProjectVisual } from "@/components/ProjectVisual";
 import { Reveal } from "@/components/Reveal";
 import { siteToSales } from "@/lib/site";
 import type { CaseStudy } from "@/content/case-studies";
+import type { T } from "@/i18n/t";
 
 /**
  * Page head. With `image` it opens on a full-bleed banner (Gladstone's About / project pattern);
@@ -133,7 +134,7 @@ export function ProofGrid({ projects }: { projects: CaseStudy[] }) {
 }
 
 /** Site → Strategy → Brand → Story → Experience → Distribution → Sales. */
-export function SiteToSalesPath() {
+export function SiteToSalesPath({ t }: { t: T }) {
   return (
     <ol className="grid grid-cols-2 border-t border-ink/70 sm:grid-cols-4 lg:grid-cols-7">
       {siteToSales.map((step, i) => (
@@ -142,7 +143,7 @@ export function SiteToSalesPath() {
           className="group border-b border-ink/25 py-6 pr-4 lg:border-b-0 lg:border-r lg:border-ink/25 lg:pl-5 lg:first:pl-0 lg:last:border-r-0"
         >
           <span className="text-meta">{String(i + 1).padStart(2, "0")}</span>
-          <span className="text-h3 mt-6 block transition-transform duration-500 ease-editorial group-hover:translate-x-1.5">{step}</span>
+          <span className="text-h3 mt-6 block transition-transform duration-500 ease-editorial group-hover:translate-x-1.5">{t(step)}</span>
         </li>
       ))}
     </ol>

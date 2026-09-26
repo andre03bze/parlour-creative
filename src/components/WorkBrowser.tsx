@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
+import Link, { useT } from "@/i18n/client";
 import { ProjectVisual } from "@/components/ProjectVisual";
 import { Reveal } from "@/components/Reveal";
 import { WorkIndex } from "@/components/WorkIndex";
@@ -26,6 +26,7 @@ export function WorkBrowser({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const t = useT();
   const params = useSearchParams();
 
   const category = categories.find((c) => c === params.get("category")) ?? "all";
@@ -60,14 +61,14 @@ export function WorkBrowser({
     <div>
       <div className="flex flex-col gap-6">
         <div>
-          <p className="mb-3 text-sm">Industry</p>
+          <p className="mb-3 text-sm">{t("Industry")}</p>
           <div
             className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden"
             role="group"
-            aria-label="Filter work by industry"
+            aria-label={t("Filter work by industry")}
           >
             <button type="button" className={chip(category === "all")} aria-pressed={category === "all"} onClick={() => set("category", "all")}>
-              All <span className="ml-1 opacity-60">{inMarket.length}</span>
+              {t("All")} <span className="ml-1 opacity-60">{inMarket.length}</span>
             </button>
             {categories.map((c) => {
               const n = count(c);
@@ -80,7 +81,7 @@ export function WorkBrowser({
                   disabled={n === 0}
                   onClick={() => set("category", c)}
                 >
-                  {categoryLabels[c]} <span className="ml-1 opacity-60">{n}</span>
+                  {t(categoryLabels[c])} <span className="ml-1 opacity-60">{n}</span>
                 </button>
               );
             })}
@@ -90,28 +91,28 @@ export function WorkBrowser({
         <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 text-sm">
           {stage && (
             <button type="button" onClick={() => set("stage", "all")} className="underline underline-offset-4 transition-colors duration-300 ease-link hover:text-accent-text">
-              Method · {stage} ×
+              {t("Method")} · {t(stage)} ×
             </button>
           )}
           {markets.length > 1 ? (
-            <div className="flex items-center gap-4" role="group" aria-label="Filter work by market">
-              <span className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-ink-soft">Market</span>
+            <div className="flex items-center gap-4" role="group" aria-label={t("Filter work by market")}>
+              <span className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-ink-soft">{t("Market")}</span>
               <button type="button" aria-pressed={market === "all"} className={quiet(market === "all")} onClick={() => set("market", "all")}>
-                All
+                {t("All")}
               </button>
               {markets.map((m) => (
                 <button key={m} type="button" aria-pressed={market === m} className={quiet(market === m)} onClick={() => set("market", m)}>
-                  {m} <span className="opacity-60">{base.filter((p) => p.market === m).length}</span>
+                  {t(m)} <span className="opacity-60">{base.filter((p) => p.market === m).length}</span>
                 </button>
               ))}
             </div>
           ) : (
             <span />
           )}
-          <div className="flex gap-4" role="group" aria-label="View">
+          <div className="flex gap-4" role="group" aria-label={t("View")}>
             {(["thumbnail", "list"] as const).map((v) => (
               <button key={v} type="button" aria-pressed={view === v} onClick={() => set("view", v)} className={`capitalize ${quiet(view === v)}`}>
-                {v}
+                {t(v === "thumbnail" ? "Thumbnail" : "List")}
               </button>
             ))}
           </div>
@@ -119,12 +120,12 @@ export function WorkBrowser({
       </div>
 
       <p className="sr-only" role="status" aria-live="polite">
-        {shown.length} projects shown
+        {t("{n} projects shown", { n: shown.length })}
       </p>
 
       <div className="mt-10 min-h-[40vh]">
         {shown.length === 0 ? (
-          <p className="text-ink-soft">No projects match this combination yet.</p>
+          <p className="text-ink-soft">{t("No projects match this combination yet.")}</p>
         ) : view === "list" ? (
           <div key={`${category}-${market}-list`} className="filter-in">
             <WorkIndex projects={shown} />

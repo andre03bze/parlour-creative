@@ -1,8 +1,11 @@
-import Link from "next/link";
+import Link from "@/i18n/client";
+import { getT } from "@/i18n/t";
+import type { Lang } from "@/i18n/config";
 import { Logo } from "@/components/Logo";
 import { contact, footerNav, footerTagline, sectorNav, socialLinks } from "@/lib/site";
 
-export function SiteFooter() {
+export function SiteFooter({ lang }: { lang: Lang }) {
+  const t = getT(lang);
   return (
     <footer data-dark className="bg-coal text-paper">
       {/* Growth Diagnostic promo — the Gladstone "sub-brand" banner slot */}
@@ -12,11 +15,11 @@ export function SiteFooter() {
       >
         <div className="container-page flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-paper/75">Parlour Growth Diagnostic</p>
-            <p className="text-display mt-4">Find the leak.</p>
+            <p className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-paper/75">{t("Parlour Growth Diagnostic")}</p>
+            <p className="text-display mt-4">{t("Find the leak.")}</p>
           </div>
           <p className="flex items-center gap-4 text-xs font-medium uppercase tracking-[0.14em]">
-            Three weeks. One plan.
+            {t("Three weeks. One plan.")}
             <span aria-hidden="true" className="inline-block transition-transform duration-500 group-hover:translate-x-2">→</span>
           </p>
         </div>
@@ -26,14 +29,13 @@ export function SiteFooter() {
         <div>
           <Logo className="h-9 w-auto" title="Parlour Creative" />
           <p className="mt-4 max-w-xs text-sm text-paper/70">
-            Strategy-led brand and marketing for real estate, hospitality and founders. Based in Belize, serving the
-            Americas.
+            {t("Strategy-led brand and marketing for real estate, hospitality and founders. Based in Belize, serving the Americas.")}
           </p>
         </div>
 
         <div className="text-sm">
           <p className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-paper/75">Belize</p>
-          <p className="mt-3 text-paper/85">Serving the Americas</p>
+          <p className="mt-3 text-paper/85">{t("Serving the Americas")}</p>
           <a href={`mailto:${contact.email}`} className="mt-3 block py-1 hover:underline">{contact.email}</a>
           <a href={contact.whatsappHref} className="block py-1 hover:underline">{contact.whatsapp} · WhatsApp</a>
           {socialLinks.length > 0 && (
@@ -45,27 +47,27 @@ export function SiteFooter() {
           )}
         </div>
 
-        <nav aria-label="Footer" className="text-sm">
-          <p className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-paper/75">Explore</p>
+        <nav aria-label={t("Footer")} className="text-sm">
+          <p className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-paper/75">{t("Explore")}</p>
           <ul className="mt-3 space-y-1.5">
             {footerNav.filter((i) => !["/privacy", "/terms"].includes(i.href)).map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-paper/85 hover:text-paper hover:underline">{item.label}</Link>
+                <Link href={item.href} className="text-paper/85 hover:text-paper hover:underline">{t(item.label)}</Link>
               </li>
             ))}
           </ul>
         </nav>
 
-        <nav aria-label="Sectors" className="text-sm">
-          <p className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-paper/75">Sectors</p>
+        <nav aria-label={t("Sectors")} className="text-sm">
+          <p className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-paper/75">{t("Sectors")}</p>
           <ul className="mt-3 space-y-1.5">
             {sectorNav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-paper/85 hover:text-paper hover:underline">{item.label}</Link>
+                <Link href={item.href} className="text-paper/85 hover:text-paper hover:underline">{t(item.label)}</Link>
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-paper/70">{footerTagline}</p>
+          <p className="mt-6 text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-paper/70">{t(footerTagline)}</p>
         </nav>
       </div>
 
@@ -73,8 +75,8 @@ export function SiteFooter() {
         <div className="container-page flex flex-col gap-2 py-6 text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-paper/70 sm:flex-row sm:items-center sm:justify-between">
           <p>&copy; {new Date().getFullYear()} Parlour Creative</p>
           <p className="flex gap-6">
-            <Link href="/privacy" className="hover:text-paper">Privacy</Link>
-            <Link href="/terms" className="hover:text-paper">Terms</Link>
+            <Link href="/privacy" className="hover:text-paper">{t("Privacy")}</Link>
+            <Link href="/terms" className="hover:text-paper">{t("Terms")}</Link>
           </p>
         </div>
       </div>

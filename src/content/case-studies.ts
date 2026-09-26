@@ -67,6 +67,8 @@ export interface CaseStudy {
   tagline: string;
   /** Uppercase discipline labels (display metadata, mono slash list). */
   disciplines: string[];
+  /** Set on localised copies: the English disciplines, which the Method mapping keys on. */
+  disciplinesEn?: string[];
   /** Image used in the index hover, thumbnail grid and social cards. null → typographic placeholder tile. */
   cover: CaseStudyImage | null;
   /** Extra narrative paragraphs shown under the headline in the editorial record. */

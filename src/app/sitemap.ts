@@ -18,22 +18,20 @@ const staticRoutes = [
   { path: "/terms", priority: 0.2, changeFrequency: "yearly" as const },
 ];
 
+const url = (path: string, es = false) => `${siteUrl}${es ? (path === "" ? "/es" : `/es${path}`) : path}`;
+const alt = (path: string) => ({ languages: { en: url(path), es: url(path, true) } });
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((r) => ({
-    url: `${siteUrl}${r.path}`,
-    lastModified: now,
-    changeFrequency: r.changeFrequency,
-    priority: r.priority,
-  }));
+  // Every public page exists in English (unprefixed) and Spanish (/es), cross-linked with hreflang.
+  const entry = (path: string, changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"], priority: number) =>
+    [false, true].map((es) => ({ url: url(path, es), lastModified: now, changeFrequency, priority, alternates: alt(path) }));
 
-  const caseStudyEntries: MetadataRoute.Sitemap = getPublishedCaseStudies().map((c) => ({
-    url: `${siteUrl}/work/${c.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: c.featured ? 0.9 : 0.7,
-  }));
+  const staticEntries: MetadataRoute.Sitemap = staticRoutes.flatMap((r) => entry(r.path, r.changeFrequency, r.priority));
+  const caseStudyEntries: MetadataRoute.Sitemap = getPublishedCaseStudies().flatMap((c) =>
+    entry(`/work/${c.slug}`, "monthly", c.featured ? 0.9 : 0.7)
+  );
 
   // /insights is intentionally excluded — no articles yet (see CONTENT-GAPS.md).
   return [...staticEntries, ...caseStudyEntries];
