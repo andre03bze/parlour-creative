@@ -4,6 +4,15 @@ Everything the live site still needs from Laura/Andre. Nothing here blocks the b
 — every gap below renders as an honest placeholder/empty state, never a guess. Pulled
 directly from the playbook's own "Open items" list plus gaps found while building.
 
+## Blocking the Gladstone-structure rebuild
+
+- [ ] **Live research of gladstoneadvertising.com.** Blocked by this environment's
+      network egress proxy (WebFetch returns `EGRESS_BLOCKED`); no browser tool is
+      available in this session either. Waiting on the user to widen network access
+      (environment menu → Edit → Network access) or supply the content directly. See
+      `GLADSTONE-STRUCTURE-MAP.md` for what's already prepared (current-implementation
+      audit) pending this.
+
 ## Blocking a launch-quality feel (fix first)
 
 - [ ] **Logo.** No brand mark exists. Site ships with a wordmark ("Parlour" set in the
