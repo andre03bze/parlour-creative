@@ -12,11 +12,13 @@ const nextConfig: NextConfig = {
     return [{ source: "/work/laura-artform", destination: "/work", permanent: true }];
   },
   async headers() {
+    const blockIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING !== "1";
     return [
       {
         source: "/:path*",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
+          ...(blockIndexing ? [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] : []),
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
         ],

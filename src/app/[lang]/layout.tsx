@@ -13,7 +13,7 @@ import { isLang, langs, type Lang } from "@/i18n/config";
 import { ogImage, ogLocale } from "@/i18n/meta";
 import { esClient } from "@/i18n/es";
 import { getT } from "@/i18n/t";
-import { contact, siteUrl } from "@/lib/site";
+import { allowIndexing, contact, siteUrl } from "@/lib/site";
 import "../globals.css";
 
 // Existing Parlour identity: Neue Haas Unica / Helvetica Neue (Adobe font, not licensed for
@@ -42,6 +42,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const t = getT(lang);
   return {
     metadataBase: new URL(siteUrl),
+    ...(allowIndexing ? {} : { robots: { index: false, follow: false } }),
     title: {
       default: t("Parlour Creative · Real Estate & Hospitality Marketing, Belize"),
       template: "%s · Parlour Creative",

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "@/lib/site";
+import { allowIndexing, siteUrl } from "@/lib/site";
 import { getPublishedCaseStudies } from "@/content/case-studies";
 
 const staticRoutes = [
@@ -22,6 +22,7 @@ const url = (path: string, es = false) => `${siteUrl}${es ? (path === "" ? "/es"
 const alt = (path: string) => ({ languages: { en: url(path), es: url(path, true) } });
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  if (!allowIndexing) return [];
   const now = new Date();
 
   // Every public page exists in English (unprefixed) and Spanish (/es), cross-linked with hreflang.

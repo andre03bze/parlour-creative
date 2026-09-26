@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { Lang } from "./config";
 import { alternatesFor, ogImage, ogLocale } from "./meta";
 import { localePath } from "./config";
+import { allowIndexing } from "@/lib/site";
 import { getT, type T } from "./t";
 
 export type LangParams = { params: Promise<{ lang: string }> };
@@ -29,6 +30,7 @@ export async function pageMeta(
     ...(description ? { description: shownDescription } : {}),
     alternates: alternatesFor(lang, path),
     ...extra,
+    ...(allowIndexing ? {} : { robots: { index: false, follow: false } }),
     openGraph: {
       type: "website",
       siteName: "Parlour Creative",

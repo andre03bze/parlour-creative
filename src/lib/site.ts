@@ -4,6 +4,12 @@
  * callers must render an honest fallback, not a guess.
  */
 
+/**
+ * Indexing is OFF unless NEXT_PUBLIC_ALLOW_INDEXING=1 is set at build time. Temporary and preview deployments therefore
+ * ship noindex metadata, an X-Robots-Tag header, a blocking robots.txt and an empty sitemap by default.
+ */
+export const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "1";
+
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://parlourcreative.ca";
 
 /** Menu overlay (Gladstone-style single menu). Insights joins once a real article exists. */

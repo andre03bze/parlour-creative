@@ -6,6 +6,7 @@ Status: production build verified locally. **Not deployed.** No analytics, pixel
 | Variable | Purpose | Default |
 |---|---|---|
 | `NEXT_PUBLIC_SITE_URL` | canonical URLs, hreflang, sitemap, JSON-LD | `https://parlourcreative.ca` |
+| `NEXT_PUBLIC_ALLOW_INDEXING` | `1` enables indexing (final launch only); otherwise noindex + X-Robots-Tag + robots Disallow + empty sitemap | off |
 | `NEXT_PUBLIC_SHOW_PALETTES` | show the palette review switcher | off (dev only) |
 | `NEXT_PUBLIC_SHOW_LAB` | serve `/lab/*` prototype routes (always noindex; disallowed in robots) | off |
 | `NEXT_PUBLIC_CONTACT_DELIVERY` | `ready` removes the on-page "not connected" notice | unset |
