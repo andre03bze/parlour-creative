@@ -7,7 +7,7 @@ import { useEffect, useSyncExternalStore } from "react";
  * Switches `data-theme` on <html>: current | a | b | c. Also `?theme=a` in the URL and keys 0–3.
  */
 const themes = [
-  { id: "current", label: "Current", short: "Now", swatch: ["#e4e2dc", "#171614", "#8a4a38"] },
+  { id: "current", label: "Current · Default", short: "Now", swatch: ["#e4e2dc", "#171614", "#8a4a38"] },
   { id: "a", label: "A · Warm Editorial", short: "A", swatch: ["#f1eadf", "#5c1e1b", "#c9a66b"] },
   { id: "b", label: "B · Green & Plaster", short: "B", swatch: ["#f3ebe5", "#0e241a", "#edb9af"] },
   { id: "c", label: "C · Cenote & Añil", short: "C", swatch: ["#eae7df", "#101a3a", "#e9a63a"] },
