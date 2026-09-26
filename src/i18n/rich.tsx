@@ -12,19 +12,24 @@ export function rich(
   vars?: Record<string, string | number>
 ): ReactNode {
   const src = t(text, vars);
-  const out: ReactNode[] = [];
-  const re = /<(\w)>([\s\S]*?)<\/\1>/g;
-  let last = 0;
-  let m: RegExpExecArray | null;
-  let i = 0;
-  while ((m = re.exec(src))) {
-    if (m.index > last) out.push(src.slice(last, m.index));
-    const render = tags[m[1]!];
-    out.push(<Fragment key={i++}>{render ? render(m[2]) : m[2]}</Fragment>);
-    last = m.index + m[0].length;
-  }
-  if (last < src.length) out.push(src.slice(last));
-  return out;
+  // Tags may nest (e.g. "<p><n>38</n> projects</p>"), so each tag's contents are parsed recursively.
+  const parse = (str: string, depth = 0): ReactNode[] => {
+    const out: ReactNode[] = [];
+    const re = /<(\w)>([\s\S]*?)<\/\1>/g;
+    let last = 0;
+    let m: RegExpExecArray | null;
+    let i = 0;
+    while ((m = re.exec(str))) {
+      if (m.index > last) out.push(str.slice(last, m.index));
+      const render = tags[m[1]!];
+      const inner = parse(m[2]!, depth + 1);
+      out.push(<Fragment key={`${depth}-${i++}`}>{render ? render(inner) : inner}</Fragment>);
+      last = m.index + m[0].length;
+    }
+    if (last < str.length) out.push(str.slice(last));
+    return out;
+  };
+  return parse(src);
 }
 
 export const accent = (c: ReactNode) => <span className="accent">{c}</span>;
