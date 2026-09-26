@@ -518,18 +518,24 @@ html {
   html.has-cursor select, html.has-cursor .scroll-rail, html.has-cursor .scroll-rail * { cursor: pointer; }
   .pc {
     display: block; position: fixed; left: 0; top: 0; z-index: 90; pointer-events: none; will-change: transform;
-    color: var(--color-paper); mix-blend-mode: difference; opacity: 0; transition: opacity 250ms ease;
+    color: var(--color-ink); --pc-bg: var(--color-paper); opacity: 0; transition: opacity 250ms ease, color 260ms ease;
   }
+  /* Adaptive tone (set from the pixels/background under the pointer): dark mark on light surfaces, light mark on dark. */
+  .pc[data-tone="light"] { color: var(--color-paper); --pc-bg: var(--color-ink); }
   .pc[data-visible="1"] { opacity: 1; }
   .pc[data-state="hide"] { opacity: 0; }
   .pc-mark {
     position: absolute; left: 0; top: 0; box-sizing: border-box; width: 7px; height: 7px; border: 1px solid currentColor;
     border-radius: 50%; background: currentColor; transform: translate(-50%, -50%);
+    /* thin counter-tone halo: the mark reads as cut out of any surface, without a shadow or a box */
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--pc-bg) 55%, transparent);
     transition: width 260ms var(--ease-editorial), height 260ms var(--ease-editorial), border-radius 260ms var(--ease-editorial), background-color 260ms ease, transform 200ms var(--ease-editorial);
   }
-  .pc[data-state="link"] .pc-mark { width: 30px; height: 30px; background: transparent; }
+  .pc[data-state="link"] .pc-mark { width: 30px; height: 30px; background: color-mix(in srgb, var(--pc-bg) 18%, transparent); }
+  /* text-bearing marks get a translucent counter-tone surface so VIEW / VER stays legible over mixed imagery */
   .pc[data-state="view"] .pc-mark, .pc[data-state="next"] .pc-mark, .pc[data-state="prev"] .pc-mark {
-    width: 54px; height: 26px; border-radius: 13px; background: transparent;
+    width: 54px; height: 26px; border-radius: 13px; background: color-mix(in srgb, var(--pc-bg) 62%, transparent);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
   }
   .pc[data-state="next"] .pc-mark, .pc[data-state="prev"] .pc-mark { width: 40px; }
   .pc[data-down="1"] .pc-mark { transform: translate(-50%, -50%) scale(0.86); }
